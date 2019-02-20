@@ -16,6 +16,8 @@
                 Button1.Text = "删除DNF更新残留安装包"
             Case "del_3rd"
                 Button1.Text = "删除自动下载的可执行组件(TX管家等)"
+            Case "tguard"
+                Button1.Text = "停止并禁用DNFTGuardSvc服务"
         End Select
     End Sub
 
@@ -87,7 +89,38 @@
                     End Try
                 Next
                 Button1.Text = "OK"
+            Case "停止并禁用DNFTGuardSvc服务"
+                Dim svc() As ServiceProcess.ServiceController = ServiceProcess.ServiceController.GetServices
+                For Each vline As ServiceProcess.ServiceController In svc
+                    If vline.DisplayName = "TGuardSvc" Then
+                        TextBox1.AppendText("服务状态：")
+                        If vline.Status <> ServiceProcess.ServiceControllerStatus.Stopped Then
+                            TextBox1.AppendText("正在运行" + vbCrLf)
+                            TextBox1.AppendText("尝试停止TGuardSvc服务")
+                            Try
+                                vline.Stop()
+                                TextBox1.AppendText("[成功]" + vbCrLf)
 
+                            Catch ex As Exception
+                                TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
+                            End Try
+                        Else
+                            TextBox1.AppendText("已停止" + vbCrLf)
+                        End If
+                        Try
+                            TextBox1.AppendText("尝试禁用TGuardSvc服务")
+
+                            Dim regist As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine
+                            Dim svcreg As Microsoft.Win32.RegistryKey = regist.OpenSubKey("SYSTEM\CurrentControlSet\Services\TGuardSvc", True)
+                            svcreg.SetValue("Start", 4, Microsoft.Win32.RegistryValueKind.DWord)
+
+                            TextBox1.AppendText("[成功]" + vbCrLf)
+                            Button1.Text = "OK"
+                        Catch ex As Exception
+                            TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
+                        End Try
+                    End If
+                Next
         End Select
     End Sub
 End Class

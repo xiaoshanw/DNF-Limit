@@ -33,11 +33,12 @@ Partial Class Main
         Me.GamePath = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button11 = New System.Windows.Forms.Button()
         Me.Button10 = New System.Windows.Forms.Button()
         Me.Button9 = New System.Windows.Forms.Button()
         Me.Button8 = New System.Windows.Forms.Button()
         Me.Button7 = New System.Windows.Forms.Button()
-        Me.Button11 = New System.Windows.Forms.Button()
+        Me.Button12 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -57,7 +58,7 @@ Partial Class Main
         Me.GroupBox1.Controls.Add(Me.Label1)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(568, 216)
+        Me.GroupBox1.Size = New System.Drawing.Size(568, 246)
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "TX全家桶"
@@ -151,6 +152,7 @@ Partial Class Main
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.Button12)
         Me.GroupBox2.Controls.Add(Me.Button11)
         Me.GroupBox2.Controls.Add(Me.Button10)
         Me.GroupBox2.Controls.Add(Me.Button9)
@@ -158,10 +160,21 @@ Partial Class Main
         Me.GroupBox2.Controls.Add(Me.Button7)
         Me.GroupBox2.Location = New System.Drawing.Point(12, 212)
         Me.GroupBox2.Name = "GroupBox2"
-        Me.GroupBox2.Size = New System.Drawing.Size(568, 171)
+        Me.GroupBox2.Size = New System.Drawing.Size(568, 201)
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "附加功能"
+        '
+        'Button11
+        '
+        Me.Button11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button11.Location = New System.Drawing.Point(6, 136)
+        Me.Button11.Name = "Button11"
+        Me.Button11.Size = New System.Drawing.Size(556, 23)
+        Me.Button11.TabIndex = 4
+        Me.Button11.Text = "[Win10蓝屏解决方案] Win10蓝屏解决方案"
+        Me.Button11.UseVisualStyleBackColor = True
         '
         'Button10
         '
@@ -207,22 +220,22 @@ Partial Class Main
         Me.Button7.Text = "[提高帧率] 禁用/恢复Intel CPU 幽灵与熔断补丁"
         Me.Button7.UseVisualStyleBackColor = True
         '
-        'Button11
+        'Button12
         '
-        Me.Button11.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+        Me.Button12.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button11.Location = New System.Drawing.Point(6, 136)
-        Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(556, 23)
-        Me.Button11.TabIndex = 4
-        Me.Button11.Text = "[Win10蓝屏解决方案] Win10蓝屏解决方案"
-        Me.Button11.UseVisualStyleBackColor = True
+        Me.Button12.Location = New System.Drawing.Point(6, 165)
+        Me.Button12.Name = "Button12"
+        Me.Button12.Size = New System.Drawing.Size(556, 23)
+        Me.Button12.TabIndex = 5
+        Me.Button12.Text = "[解决CPU/磁盘占用]禁用TGuard服务"
+        Me.Button12.UseVisualStyleBackColor = True
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(592, 395)
+        Me.ClientSize = New System.Drawing.Size(592, 425)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
@@ -251,5 +264,6 @@ Partial Class Main
     Friend WithEvents Button10 As System.Windows.Forms.Button
     Friend WithEvents Button9 As System.Windows.Forms.Button
     Friend WithEvents Button11 As System.Windows.Forms.Button
+    Friend WithEvents Button12 As System.Windows.Forms.Button
 
 End Class

@@ -270,4 +270,13 @@
 
 
 
+    Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
+        With vMSG.TextBox1
+            .Clear()
+            .AppendText("该功能将停止并禁用DNF注册的TGuardSvc服务" + vbCrLf)
+            .AppendText("--------------------" + vbCrLf)
+        End With
+        vMSG.Mode = "tguard"
+        vMSG.Show()
+    End Sub
 End Class
