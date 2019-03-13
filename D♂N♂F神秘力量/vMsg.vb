@@ -18,6 +18,8 @@
                 Button1.Text = "删除自动下载的可执行组件(TX管家等)"
             Case "tguard"
                 Button1.Text = "停止并禁用DNFTGuardSvc服务"
+            Case "background"
+                Button1.Text = "进入后台模式"
         End Select
     End Sub
 
@@ -113,7 +115,7 @@
                             Dim regist As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine
                             Dim svcreg As Microsoft.Win32.RegistryKey = regist.OpenSubKey("SYSTEM\CurrentControlSet\Services\TGuardSvc", True)
                             svcreg.SetValue("Start", 4, Microsoft.Win32.RegistryValueKind.DWord)
-
+                            svcreg.Flush()
                             TextBox1.AppendText("[成功]" + vbCrLf)
                             Button1.Text = "OK"
                         Catch ex As Exception
@@ -121,6 +123,15 @@
                         End Try
                     End If
                 Next
+            Case "进入后台模式"
+                With Main
+                    .NotifyIcon1.Visible = True
+                    .NotifyIcon1.ShowBalloonTip(2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
+                    .Visible = False
+                    Auto_Kill_Gameloader_Flag = 0
+                    .AutoKill_GameLoader.Start()
+                    Me.Close()
+                End With
         End Select
     End Sub
 End Class

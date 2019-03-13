@@ -4,6 +4,8 @@
     Public VoCytDefenderEx_Path As String
     Public Public_ArrayList As ArrayList
     Dim vCurrend_File As String
+    Public Hide_Run As Boolean = False
+    Public Auto_Kill_Gameloader_Flag As Integer
     Public Structure My_Data_Type
         Dim Name As String
         Dim Value As Boolean

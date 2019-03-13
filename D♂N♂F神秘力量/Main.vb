@@ -39,6 +39,21 @@
         'If CanIFEO = False Then MsgBox("权限不足，将采用[文件读写]模式" + vbCrLf + "[更新游戏]需要[恢复]！！！" + vbCrLf + "详情参阅帮助")
         Set_Application_Title()
 
+        Select Case My.Application.CommandLineArgs.Count
+            Case 1
+                If My.Application.CommandLineArgs(0).ToLower.Trim = "-b" Then
+                    NotifyIcon1.Visible = True
+                    NotifyIcon1.ShowBalloonTip(2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
+                    Me.Visible = False
+                    'Me.Hide()
+                    Hide_Run = True
+                    Auto_Kill_Gameloader_Flag = 0
+                    AutoKill_GameLoader.Start()
+                End If
+        End Select
+
+
+
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -278,5 +293,120 @@
         End With
         vMSG.Mode = "tguard"
         vMSG.Show()
+    End Sub
+
+    Private Sub Button13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button13.Click
+        With vMSG.TextBox1
+            .Clear()
+            .AppendText("该功能将自动检测并关闭下列启动器及插件：" + vbCrLf)
+            .AppendText("TenioDL.exe" + vbCrLf)
+            .AppendText("GameLoader.exe" + vbCrLf)
+            .AppendText("TesService.exe" + vbCrLf)
+            .AppendText("--------------------" + vbCrLf)
+            .AppendText("如需运行软件自动进入后台模式，可在运行本程序时，添加 -b参数，如：" + vbCrLf)
+            .AppendText("D♂N♂F神秘力量.exe -b" + vbCrLf)
+        End With
+        vMSG.Mode = "background"
+        vMSG.Show()
+    End Sub
+
+    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_GameLoader.Tick
+        Dim vProcess() As Process = Process.GetProcesses
+        'Dim sProcess() As Process
+        Try
+            Select Case Auto_Kill_Gameloader_Flag
+                Case 0
+                    For Each vline As Process In vProcess
+                        Select Case vline.ProcessName.ToLower
+
+                            Case "teniodl", "gameloader" ', "tesservice"
+                                NotifyIcon1.ShowBalloonTip(2000, "提示", "检测到" + vline.ProcessName + "启动", ToolTipIcon.Info)
+                                Auto_Kill_Gameloader_Flag = 1
+                                AutoKill_GameLoader.Interval = 1000
+                        End Select
+                    Next
+                Case 1
+                    For Each vline As Process In vProcess
+                        Select Case vline.ProcessName.ToLower
+                            Case "dnf"
+                                NotifyIcon1.ShowBalloonTip(2000, "提示", "检测到" + vline.ProcessName + "启动" + vbCrLf + "等待游戏载入", ToolTipIcon.Info)
+                                Auto_Kill_Gameloader_Flag = 2
+                        End Select
+                    Next
+                Case 2
+                    For Each vline As Process In vProcess
+                        Select Case vline.ProcessName.ToLower
+                            Case "dnf"
+                                'vline.Start()
+                                If vline.MainWindowTitle = "地下城与勇士" And DateDiff("s", vline.StartTime, Now) > 60 Then
+                                    NotifyIcon1.ShowBalloonTip(2000, "提示", vline.ProcessName + "启动成功" + vbCrLf + "将于10秒后结束残余启动器", ToolTipIcon.Info)
+                                    AutoKill_GameLoader.Stop()
+                                    AutoKill_Kill.Start()
+                                    AutoKill_GameLoader.Interval = 5000
+                                    Auto_Kill_Gameloader_Flag = 0
+                                End If
+                        End Select
+                    Next
+            End Select
+        Catch ex As Exception
+            NotifyIcon1.ShowBalloonTip(2000, "错误", ex.Message, ToolTipIcon.Error)
+        End Try
+
+
+    End Sub
+
+    Private Sub NotifyIcon1_MouseDoubleClick(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles NotifyIcon1.MouseDoubleClick
+        AutoKill_GameLoader.Stop()
+        Me.Visible = True
+        NotifyIcon1.Visible = False
+    End Sub
+
+    Private Sub 还原ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 还原ToolStripMenuItem.Click
+        NotifyIcon1_MouseDoubleClick(Nothing, Nothing)
+    End Sub
+
+    Private Sub 关闭ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 关闭ToolStripMenuItem.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Main_Activated(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Activated
+        If Hide_Run Then
+            Hide_Run = False
+            Me.Hide()
+        End If
+    End Sub
+
+   
+    Private Sub AutoKill_Kill_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_Kill.Tick
+        Dim vProcess() As Process = Process.GetProcesses
+        Dim sProcess() As Process
+        Try
+            For Each vline As Process In vProcess
+                Select Case vline.ProcessName.ToLower
+                    Case "teniodl", "gameloader", "tesservice"
+                        sProcess = Process.GetProcessesByName(vline.ProcessName)
+                        For Each vline2 As Process In sProcess
+                            If vline2.MainModule.FileName IsNot Nothing Then
+                                If vline2.MainModule.FileName.ToString.ToLower.Contains(GamePath.Text.ToLower) Or _
+                                vline2.MainModule.FileName.ToString.ToLower.Contains("tencent") Or _
+                                vline2.MainModule.FileName.ToString.ToLower.Contains("tgp") Or _
+                                vline2.MainModule.FileName.ToString.ToLower.Contains("wegame") Then
+                                    Try
+                                        vline2.Kill()
+                                        NotifyIcon1.ShowBalloonTip(2000, "提示", "结束" + vline2.ProcessName + "成功", ToolTipIcon.Info)
+                                    Catch ex2 As Exception
+                                        NotifyIcon1.ShowBalloonTip(2000, "警告", "结束" + vline2.ProcessName + "失败" + vbCrLf + ex2.Message, ToolTipIcon.Warning)
+                                    End Try
+                                End If
+                            End If
+                        Next
+                End Select
+            Next
+        Catch ex As Exception
+            NotifyIcon1.ShowBalloonTip(2000, "错误", ex.Message, ToolTipIcon.Error)
+        End Try
+        AutoKill_Kill.Stop()
+        AutoKill_GameLoader.Start()
+        AutoKill_Kill.Enabled = False
     End Sub
 End Class
