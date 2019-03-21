@@ -6,8 +6,24 @@
     End Sub
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim nc As New mt
+        Dim nt As New Threading.Thread(AddressOf nc.Check_for_Update)
+        nt.Start()
+
+
         Kill_Process()
-        GamePath.Text = Find_DNF_Path()
+
+        Dim lastpath As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName + "\last-path.ini"
+        If IO.File.Exists(lastpath) Then
+            Try
+                GamePath.Text = IO.File.ReadAllText(lastpath)
+            Catch ex As Exception
+                GamePath.Text = Find_DNF_Path()
+            End Try
+        Else
+            GamePath.Text = Find_DNF_Path()
+        End If
+
         Try
             vData = Get_Currend_File_String()
         Catch ex As Exception
@@ -408,5 +424,24 @@
         AutoKill_Kill.Stop()
         AutoKill_GameLoader.Start()
         AutoKill_Kill.Enabled = False
+    End Sub
+
+    Private Sub Main_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
+        Try
+            Dim vpath As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName
+            Dim lastpath As String = vpath + "\last-path.ini"
+            If GamePath.Text <> "" Then IO.File.WriteAllText(lastpath, GamePath.Text)
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Button14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button14.Click
+        Dim str As String = Find_DNF_Path()
+        If str = "" Then
+            MsgBox("[注册表/默认安装路径/常规路径]均无DNF路径信息，无法检测DNF游戏路径" + +vbCrLf + vbCrLf + "请手动指定DNF游戏路径")
+        Else
+            GamePath.Text = str
+        End If
     End Sub
 End Class

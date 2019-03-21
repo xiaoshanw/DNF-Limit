@@ -47,6 +47,7 @@ Partial Class Main
         Me.关闭ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoKill_GameLoader = New System.Windows.Forms.Timer(Me.components)
         Me.AutoKill_Kill = New System.Windows.Forms.Timer(Me.components)
+        Me.Button14 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -57,6 +58,7 @@ Partial Class Main
         Me.GroupBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.Button14)
         Me.GroupBox1.Controls.Add(Me.Button6)
         Me.GroupBox1.Controls.Add(Me.Button5)
         Me.GroupBox1.Controls.Add(Me.Button3)
@@ -135,7 +137,7 @@ Partial Class Main
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(75, 23)
         Me.Button4.TabIndex = 5
-        Me.Button4.Text = "选择路径"
+        Me.Button4.Text = "手动选择"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'GamePath
@@ -144,7 +146,7 @@ Partial Class Main
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.GamePath.Location = New System.Drawing.Point(65, 20)
         Me.GamePath.Name = "GamePath"
-        Me.GamePath.Size = New System.Drawing.Size(525, 21)
+        Me.GamePath.Size = New System.Drawing.Size(444, 21)
         Me.GamePath.TabIndex = 4
         '
         'Label1
@@ -283,6 +285,16 @@ Partial Class Main
         '
         Me.AutoKill_Kill.Interval = 10000
         '
+        'Button14
+        '
+        Me.Button14.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button14.Location = New System.Drawing.Point(515, 18)
+        Me.Button14.Name = "Button14"
+        Me.Button14.Size = New System.Drawing.Size(75, 23)
+        Me.Button14.TabIndex = 10
+        Me.Button14.Text = "自动查找"
+        Me.Button14.UseVisualStyleBackColor = True
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -325,5 +337,6 @@ Partial Class Main
     Friend WithEvents 还原ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 关闭ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents AutoKill_Kill As System.Windows.Forms.Timer
+    Friend WithEvents Button14 As System.Windows.Forms.Button
 
 End Class

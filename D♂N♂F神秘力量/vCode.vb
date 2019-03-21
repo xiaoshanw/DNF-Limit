@@ -1,9 +1,11 @@
 ﻿Module vCode
     Public vData() As My_Data_Type
     Public CanIFEO As Boolean
+    Public Update_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update"
+    Public Update_Page As String = "http://bbs.colg.cn/thread-7393386-1-1.html"
     Public VoCytDefenderEx_Path As String
     Public Public_ArrayList As ArrayList
-    Dim vCurrend_File As String
+    Public vCurrend_File As String
     Public Hide_Run As Boolean = False
     Public Auto_Kill_Gameloader_Flag As Integer
     Public Structure My_Data_Type
@@ -122,7 +124,7 @@
             End If
         End If
     End Sub
-    Private Function Get_Application_Version() As String
+    Friend Function Get_Application_Version() As String
         Try
             Return System.Reflection.Assembly.GetExecutingAssembly.GetName.Version.ToString
         Catch ex As Exception
@@ -348,4 +350,28 @@
         End Try
     End Sub
 
+    
 End Module
+Class mt
+    Public Sub Check_for_Update()
+        Dim nowversion As Integer = vCode.Get_Application_Version().Replace(".", "")
+        Dim tmp As String = IO.Path.GetTempFileName
+        Dim latestversion As Integer = 0
+        Try
+            My.Computer.Network.DownloadFile(Update_URL, tmp, "", "", False, 500, True)
+            tmp = IO.File.ReadAllText(tmp)
+            If IsNumeric(tmp.Replace(".", "")) Then latestversion = CInt(tmp.Replace(".", ""))
+        Catch ex As Exception
+
+        End Try
+        If latestversion > nowversion Then
+            If MsgBox("已有新版本更新，是否跳转至程序发布/更新网页？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                Diagnostics.Process.Start(Update_Page)
+            End If
+        End If
+
+
+
+
+    End Sub
+End Class
