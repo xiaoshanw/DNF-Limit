@@ -439,7 +439,7 @@
     Private Sub Button14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button14.Click
         Dim str As String = Find_DNF_Path()
         If str = "" Then
-            MsgBox("[注册表/默认安装路径/常规路径]均无DNF路径信息，无法检测DNF游戏路径" + +vbCrLf + vbCrLf + "请手动指定DNF游戏路径")
+            MsgBox("[注册表/默认安装路径/常规路径]均无DNF路径信息，无法检测DNF游戏路径" + vbCrLf + vbCrLf + "请手动指定DNF游戏路径")
         Else
             GamePath.Text = str
         End If
