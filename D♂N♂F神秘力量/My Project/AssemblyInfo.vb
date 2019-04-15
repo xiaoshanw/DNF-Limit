@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' 查看程序集特性的值
 
-<Assembly: AssemblyTitle("D♂N♂F神秘力量")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyTitle("D♂N♂F神秘力量")>
+<Assembly: AssemblyDescription("一个针对DNF全家桶的屏蔽器")>
 <Assembly: AssemblyCompany("")> 
-<Assembly: AssemblyProduct("D♂N♂F神秘力量")> 
-<Assembly: AssemblyCopyright("Copyright ©  2018")> 
+<Assembly: AssemblyProduct("D♂N♂F神秘力量")>
+<Assembly: AssemblyCopyright("Copyright ©  2018-2019")>
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
