@@ -22,7 +22,7 @@ Namespace My.Resources
     '''<summary>
     '''  一个强类型的资源类，用于查找本地化的字符串等。
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Runtime.CompilerServices.CompilerGeneratedAttribute(),  _
      Global.Microsoft.VisualBasic.HideModuleNameAttribute()>  _
@@ -47,7 +47,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  使用此强类型资源类，为所有资源查找
+        '''  重写当前线程的 CurrentUICulture 属性
         '''  重写当前线程的 CurrentUICulture 属性。
         '''</summary>
         <Global.System.ComponentModel.EditorBrowsableAttribute(Global.System.ComponentModel.EditorBrowsableState.Advanced)>  _
@@ -80,17 +80,17 @@ Namespace My.Resources
         '''禁止[文件读写]：更新游戏需要[还原插件]
         '''-----------------------------------
         '''关于弹窗：
-        '''运行软件弹窗：代表[IFEO]权限不足，默认采用[文件读写]模式
+        '''禁用插件弹窗：代表[IFEO]权限不足，默认采用[文件读写]模式
         '''如果已安装360，请翻到最后查看临时赋予权限方法
         '''-----------------------------------
         '''关于游戏环境异常：
         '''进入手动模式，逐个恢复已禁用插件
+        '''一般为TenSafe.exe以及TPSvc.exe，建议不要禁用这两个插件
         '''-----------------------------------
         '''关于工作原理：
         '''禁止[文件读写]以及使用[IFEO]均可禁用插件。
         '''禁止[文件读写]：向目标文件添加[Everyone:deny]权限，插件文件不可访问
-        '''使用[IFEO]：向注册表IFEO项添加[Debugger;String]值，劫持插件文件运行
-        '''[I [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''使用[IFEO]：向注册 [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
         Friend ReadOnly Property help() As String
             Get
