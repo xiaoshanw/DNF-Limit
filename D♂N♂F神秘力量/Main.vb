@@ -439,7 +439,7 @@
 
     Private Sub Button15_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button15.Click
         If MsgBox("暴力模式会扫描DNF目录下所有相关的全家桶组件并禁用，有可能会造成游戏无法启动" + vbCrLf + vbCrLf + _
-                  "如提示：您的游戏环境异常，请重启机器后再试）" + vbCrLf + vbCrLf + _
+                  "如提示：您的游戏环境异常，请重启机器后再试" + vbCrLf + vbCrLf + _
                   "如提示异常,或者相关组件(如连发)不可用，请进入[手动模式]，还原相关插件，或者点击[一键还原]" + _
                   vbCrLf + vbCrLf + "是否使用暴力禁用？", MsgBoxStyle.YesNo) = MsgBoxResult.No Then Exit Sub
 
@@ -481,7 +481,7 @@
                     .AppendText("通常配置文件位于：" + vbCrLf)
                     .AppendText("%userprofile%\AppData\LocalLow\DNF" + vbCrLf)
                     .AppendText("文件名：" + vbCrLf)
-                    .AppendText("%DNF.cfg")
+                    .AppendText("DNF.cfg")
                     vMSG.Mode = ""
                 End If
             End If

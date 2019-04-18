@@ -25,6 +25,7 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button15 = New System.Windows.Forms.Button()
         Me.Button14 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
@@ -35,6 +36,7 @@ Partial Class Main
         Me.GamePath = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button16 = New System.Windows.Forms.Button()
         Me.Button13 = New System.Windows.Forms.Button()
         Me.Button12 = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
@@ -48,8 +50,6 @@ Partial Class Main
         Me.关闭ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoKill_GameLoader = New System.Windows.Forms.Timer(Me.components)
         Me.AutoKill_Kill = New System.Windows.Forms.Timer(Me.components)
-        Me.Button15 = New System.Windows.Forms.Button()
-        Me.Button16 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -76,6 +76,15 @@ Partial Class Main
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "TX全家桶"
+        '
+        'Button15
+        '
+        Me.Button15.Location = New System.Drawing.Point(580, 76)
+        Me.Button15.Name = "Button15"
+        Me.Button15.Size = New System.Drawing.Size(90, 23)
+        Me.Button15.TabIndex = 11
+        Me.Button15.Text = "暴力禁用模式"
+        Me.Button15.UseVisualStyleBackColor = True
         '
         'Button14
         '
@@ -191,6 +200,16 @@ Partial Class Main
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "附加功能"
         '
+        'Button16
+        '
+        Me.Button16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button16.Location = New System.Drawing.Point(329, 49)
+        Me.Button16.Name = "Button16"
+        Me.Button16.Size = New System.Drawing.Size(342, 23)
+        Me.Button16.TabIndex = 7
+        Me.Button16.Text = "[解决卡频道/黑屏]重置配置文件"
+        Me.Button16.UseVisualStyleBackColor = True
+        '
         'Button13
         '
         Me.Button13.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -298,25 +317,6 @@ Partial Class Main
         'AutoKill_Kill
         '
         Me.AutoKill_Kill.Interval = 10000
-        '
-        'Button15
-        '
-        Me.Button15.Location = New System.Drawing.Point(580, 76)
-        Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(90, 23)
-        Me.Button15.TabIndex = 11
-        Me.Button15.Text = "暴力禁用模式"
-        Me.Button15.UseVisualStyleBackColor = True
-        '
-        'Button16
-        '
-        Me.Button16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button16.Location = New System.Drawing.Point(329, 49)
-        Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(342, 23)
-        Me.Button16.TabIndex = 7
-        Me.Button16.Text = "[解决卡频道/黑屏]重置配置文件-未实现"
-        Me.Button16.UseVisualStyleBackColor = True
         '
         'Main
         '

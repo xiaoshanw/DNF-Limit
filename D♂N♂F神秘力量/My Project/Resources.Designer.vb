@@ -80,17 +80,17 @@ Namespace My.Resources
         '''禁止[文件读写]：更新游戏需要[还原插件]
         '''-----------------------------------
         '''关于弹窗：
-        '''运行软件弹窗：代表[IFEO]权限不足，默认采用[文件读写]模式
+        '''禁用插件弹窗：代表[IFEO]权限不足，默认采用[文件读写]模式
         '''如果已安装360，请翻到最后查看临时赋予权限方法
         '''-----------------------------------
         '''关于游戏环境异常：
         '''进入手动模式，逐个恢复已禁用插件
+        '''一般为TenSafe.exe以及TPSvc.exe，建议不要禁用这两个插件
         '''-----------------------------------
         '''关于工作原理：
         '''禁止[文件读写]以及使用[IFEO]均可禁用插件。
         '''禁止[文件读写]：向目标文件添加[Everyone:deny]权限，插件文件不可访问
-        '''使用[IFEO]：向注册表IFEO项添加[Debugger;String]值，劫持插件文件运行
-        '''[I [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''使用[IFEO]：向注册 [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
         Friend ReadOnly Property help() As String
             Get
@@ -99,15 +99,16 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  查找类似 |TP3Helper.exe|True|\TP3Helper.exe|TP主程序
-        '''|TPHelper.exe|True|\TCLS\TenProtect\TP\TPHelper\TPHelper.exe|TP安全中心后台程序
-        '''|TPWeb.exe|True|\TCLS\TenProtect\TP\TPHelper\TPWeb.exe|TP安全中心后台程序网络组件
-        '''|tgp_gamead.exe|True|\start\Cross\Apps\DNFTips\tgp_gamead\tgp_gamead.exe|WeGame直播程序
-        '''|AdvertDialog.exe|True|\TCLS\AdvertDialog.exe|视频播放程序
-        '''|AdvertTips.exe|True|\TCLS\AdvertTips.exe|广告程序
-        '''|BackgroundDownloader.exe|True|\TCLS\BackgroundDownloader.exe|后台下载程序
-        '''|TenSafe.exe|False|\start\TenProtect\TenSafe.exe|TP安全中心程序
-        '''|TenSafe.e [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''  查找类似 Version2.4
+        '''TP3Helper.exe|2|\TP3Helper.exe|TP主程序
+        '''TPHelper.exe|2|\TCLS\TenProtect\TP\TPHelper\TPHelper.exe|TP安全中心后台程序
+        '''TPWeb.exe|2|\TCLS\TenProtect\TP\TPHelper\TPWeb.exe|TP安全中心后台程序网络组件
+        '''tgp_gamead.exe|2|\start\Cross\Apps\DNFTips\tgp_gamead\tgp_gamead.exe|WeGame直播程序
+        '''AdvertDialog.exe|2|\TCLS\AdvertDialog.exe|视频播放程序
+        '''AdvertTips.exe|2|\TCLS\AdvertTips.exe|广告程序
+        '''BackgroundDownloader.exe|2|\TCLS\BackgroundDownloader.exe|后台下载程序
+        '''TenSafe.exe|0|\start\TenProtect\TenSafe.exe|TP安全中心程序
+        '''TenSafe.exe|0|\TCLS\TenProtect\ [字符串的其余部分被截断]&quot;; 的本地化字符串。
         '''</summary>
         Friend ReadOnly Property list() As String
             Get

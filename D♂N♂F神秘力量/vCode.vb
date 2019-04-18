@@ -393,6 +393,8 @@
                         Else
                             sg.Value = 0
                         End If
+                    Case "qbclient.exe"
+                        sg.Value = 1
                     Case Else
                         If sg.Name.ToLower.EndsWith(".exe") Then
                             sg.Value = 2
