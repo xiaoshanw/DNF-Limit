@@ -39,7 +39,9 @@
         If Visible Then PAppend("检查结束")
 
         If Exl.SelectedRows IsNot Nothing Then
-            If vSelectedRows <= Exl.Rows.Count Then Exl.Rows(vSelectedRows).Selected = True
+            If Exl.SelectedRows.Count > 0 Then
+                If vSelectedRows <= Exl.Rows.Count Then Exl.Rows(vSelectedRows).Selected = True
+            End If
         End If
 
         Return Exl.Rows.Count

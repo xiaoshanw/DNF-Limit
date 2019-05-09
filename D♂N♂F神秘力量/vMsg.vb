@@ -105,37 +105,7 @@
                 Next
                 Button1.Text = "OK"
             Case "停止并禁用TGuardSvc服务"
-                Dim svc() As ServiceProcess.ServiceController = ServiceProcess.ServiceController.GetServices
-                For Each vline As ServiceProcess.ServiceController In svc
-                    If vline.DisplayName = "TGuardSvc" Then
-                        TextBox1.AppendText("服务状态：")
-                        If vline.Status <> ServiceProcess.ServiceControllerStatus.Stopped Then
-                            TextBox1.AppendText("正在运行" + vbCrLf)
-                            TextBox1.AppendText("尝试停止TGuardSvc服务")
-                            Try
-                                vline.Stop()
-                                TextBox1.AppendText("[成功]" + vbCrLf)
-
-                            Catch ex As Exception
-                                TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
-                            End Try
-                        Else
-                            TextBox1.AppendText("已停止" + vbCrLf)
-                        End If
-                        Try
-                            TextBox1.AppendText("尝试禁用TGuardSvc服务")
-
-                            Dim regist As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine
-                            Dim svcreg As Microsoft.Win32.RegistryKey = regist.OpenSubKey("SYSTEM\CurrentControlSet\Services\TGuardSvc", True)
-                            svcreg.SetValue("Start", 4, Microsoft.Win32.RegistryValueKind.DWord)
-                            svcreg.Flush()
-                            TextBox1.AppendText("[成功]" + vbCrLf)
-                            Button1.Text = "OK"
-                        Catch ex As Exception
-                            TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
-                        End Try
-                    End If
-                Next
+                Disable_TGuardSvc()
             Case "进入后台模式"
                 With Main
                     .NotifyIcon1.Visible = True
@@ -146,5 +116,38 @@
                     Me.Close()
                 End With
         End Select
+    End Sub
+    Public Sub Disable_TGuardSvc(Optional ByVal isPrint As Boolean = True)
+        Dim svc() As ServiceProcess.ServiceController = ServiceProcess.ServiceController.GetServices
+        For Each vline As ServiceProcess.ServiceController In svc
+            If vline.DisplayName = "TGuardSvc" Then
+                If isPrint Then TextBox1.AppendText("服务状态：")
+                If vline.Status <> ServiceProcess.ServiceControllerStatus.Stopped Then
+                    If isPrint Then TextBox1.AppendText("正在运行" + vbCrLf) : TextBox1.AppendText("尝试停止TGuardSvc服务")
+                    Try
+                        Shell("cmd.exe /c sc stop " + vline.DisplayName, AppWinStyle.Hide)
+                        vline.Stop()
+                        If isPrint Then TextBox1.AppendText("[成功]" + vbCrLf)
+
+                    Catch ex As Exception
+                        If isPrint Then TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
+                    End Try
+                Else
+                    If isPrint Then TextBox1.AppendText("已停止" + vbCrLf)
+                End If
+                Try
+                    If isPrint Then TextBox1.AppendText("尝试禁用TGuardSvc服务")
+                    Shell("cmd.exe /c sc config " + vline.DisplayName + " start= disabled", AppWinStyle.Hide)
+                    Dim regist As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine
+                    Dim svcreg As Microsoft.Win32.RegistryKey = regist.OpenSubKey("SYSTEM\CurrentControlSet\Services\TGuardSvc", True)
+                    svcreg.SetValue("Start", 4, Microsoft.Win32.RegistryValueKind.DWord)
+                    svcreg.Flush()
+                    If isPrint Then TextBox1.AppendText("[成功]" + vbCrLf)
+                    Button1.Text = "OK"
+                Catch ex As Exception
+                    If isPrint Then TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
+                End Try
+            End If
+        Next
     End Sub
 End Class

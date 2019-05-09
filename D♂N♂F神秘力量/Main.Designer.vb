@@ -228,7 +228,7 @@ Partial Class Main
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(316, 23)
         Me.Button12.TabIndex = 5
-        Me.Button12.Text = "[解决CPU/磁盘占用]禁用TGuard服务"
+        Me.Button12.Text = "[解决CPU/磁盘占用]禁用TGuardSvc服务"
         Me.Button12.UseVisualStyleBackColor = True
         '
         'Button11

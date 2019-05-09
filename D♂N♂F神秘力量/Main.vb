@@ -319,14 +319,19 @@
     End Sub
 
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_GameLoader.Tick
+
+        Try
+            If Process_dnf IsNot Nothing Then
+                If Process_dnf.HasExited = False Then Exit Sub
+            End If
+        Catch ex As Exception
+        End Try
         Dim vProcess() As Process = Process.GetProcesses
-        'Dim sProcess() As Process
         Try
             Select Case Auto_Kill_Gameloader_Flag
                 Case 0
                     For Each vline As Process In vProcess
                         Select Case vline.ProcessName.ToLower
-
                             Case "teniodl", "gameloader" ', "tesservice"
                                 NotifyIcon1.ShowBalloonTip(2000, "提示", "检测到" + vline.ProcessName + "启动", ToolTipIcon.Info)
                                 Auto_Kill_Gameloader_Flag = 1
@@ -352,6 +357,7 @@
                                     AutoKill_Kill.Start()
                                     AutoKill_GameLoader.Interval = 5000
                                     Auto_Kill_Gameloader_Flag = 0
+                                    Process_dnf = vline
                                 End If
                         End Select
                     Next
@@ -408,6 +414,9 @@
                                 End If
                             End If
                         Next
+                    Case "tguardsvc", "tguard"
+                        vMSG.Disable_TGuardSvc()
+                        NotifyIcon1.ShowBalloonTip(2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
                 End Select
             Next
         Catch ex As Exception

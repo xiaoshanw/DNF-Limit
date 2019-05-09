@@ -9,7 +9,7 @@
     'Public vCurrend_File As String
     Public Hide_Run As Boolean = False
     Public Auto_Kill_Gameloader_Flag As Integer
-
+    Public Process_dnf As Process
     Public Path_Info As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName
     Public INI_Path = Path_Info + "\list.ini"
     Public VCD_Path = Path_Info + "\VoCytDefenderEx.exe"
