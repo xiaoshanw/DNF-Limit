@@ -11,8 +11,8 @@
     Public Auto_Kill_Gameloader_Flag As Integer
     Public Process_dnf As Process
     Public Path_Info As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName
-    Public INI_Path = Path_Info + "\list.ini"
-    Public VCD_Path = Path_Info + "\VoCytDefenderEx.exe"
+    Public INI_Path = Path_Info + ("\list.ini").Replace("\\", "\")
+    Public VCD_Path = (Path_Info + "\VoCytDefenderEx.exe").Replace("\\", "\")
     Public Addon_List_String() As String = {"TP3Helper.exe", _
                                             "TPHelper.exe", _
                                             "TPWeb.exe", _
@@ -112,7 +112,11 @@
                 For Each sProcess As Process In vProcess
                     For Each sString As String In vDNF_List
                         If sString.ToLower = sProcess.ProcessName.ToLower Then
-                            sProcess.Kill()
+                            Try
+                                sProcess.Kill()
+                            Catch ex As Exception
+
+                            End Try
                         End If
                     Next
                 Next
@@ -261,7 +265,7 @@
                 IO.File.WriteAllBytes(take_own_exe, My.Resources.takeown)
             End If
         End If
-        Shell("cmd.exe /c """ + take_own_exe + " /f " + inString.Replace("\\", "\") + "")
+        Shell("cmd.exe /c """ + take_own_exe + " /f " + inString.Replace("\\", "\") + "", AppWinStyle.Hide, True)
     End Sub
 
     Public Function Get_CPU_Meltdown_Spectre() As Boolean
@@ -347,8 +351,18 @@
     End Sub
     Public Function String_to_Data(ByVal InString As String) As My_Data_Type()
         If IO.Directory.Exists(Path_Info) = False Then IO.Directory.CreateDirectory(Path_Info)
-        If IO.Directory.Exists(VCD_Path) = False Then IO.File.WriteAllBytes(VCD_Path, My.Resources.VoCytDefenderEx)
 
+        Try
+            If IO.File.Exists(VCD_Path) = False Then IO.File.WriteAllBytes(VCD_Path, My.Resources.VoCytDefenderEx)
+        Catch ex As Exception
+            Try
+                VCD_Path = (IO.Path.GetTempPath + "\VoCytDefenderEx.exe").Replace("\\", "\")
+                If IO.File.Exists(VCD_Path) = False Then IO.File.WriteAllBytes(VCD_Path, My.Resources.VoCytDefenderEx)
+            Catch ex2 As Exception
+                CanIFEO = False
+            End Try
+        End Try
+        
 
         Dim vline() As String = Split(InString, vbCrLf)
         If vline.Length < 2 Then IO.File.WriteAllText(INI_Path, My.Resources.list, System.Text.Encoding.UTF8) : Return String_to_Data(My.Resources.list)
@@ -411,6 +425,14 @@
             Scan_For_Addon(vline, FileNames, InData)
         Next
     End Sub
+    Public Function Get_Files_Count(ByVal Path As String) As Integer
+        Dim eax = IO.Directory.GetFiles(Path).Length
+
+        For Each vline In IO.Directory.GetDirectories(Path)
+            eax += Get_Files_Count(vline)
+        Next
+        Return eax
+    End Function
 End Module
 Class mt
     Public Sub Check_for_Update()

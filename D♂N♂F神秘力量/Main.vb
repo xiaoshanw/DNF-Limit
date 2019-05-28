@@ -6,13 +6,7 @@
     End Sub
 
     Private Sub Main_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        Dim nc As New mt
-        Dim nt As New Threading.Thread(AddressOf nc.Check_for_Update)
-        nt.Start()
-
-
         Kill_Process()
-
         Dim lastpath As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName + "\last-path.ini"
         If IO.File.Exists(lastpath) Then
             Try
@@ -23,31 +17,43 @@
         Else
             GamePath.Text = Find_DNF_Path()
         End If
+
+        CanIFEO = Check_IFEO_Permission()
+
         If IO.File.Exists(INI_Path) Then
             vData = String_to_Data(IO.File.ReadAllText(INI_Path))
         Else
             vData = String_to_Data("")
         End If
 
-        CanIFEO = Check_IFEO_Permission()
+
         'If CanIFEO = False Then MsgBox("权限不足，将采用[文件读写]模式" + vbCrLf + "[更新游戏]需要[恢复]！！！" + vbCrLf + "详情参阅帮助")
         Set_Application_Title()
 
-        Select Case My.Application.CommandLineArgs.Count
-            Case 1
-                If My.Application.CommandLineArgs(0).ToLower.Trim = "-b" Then
-                    NotifyIcon1.Visible = True
-                    NotifyIcon1.ShowBalloonTip(2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
-                    Me.Visible = False
-                    'Me.Hide()
-                    Hide_Run = True
-                    Auto_Kill_Gameloader_Flag = 0
-                    AutoKill_GameLoader.Start()
-                End If
-        End Select
-
-
-
+        Dim Args_Background = False
+        Dim Args_Update = True
+        For Each vline In My.Application.CommandLineArgs
+            Select Case vline.ToLower
+                Case "-b", "-bg", "-background"
+                    Args_Background = True
+                Case "-nu", "-noupgrade"
+                    Args_Update = False
+            End Select
+        Next
+        If Args_Update Then
+            Dim nc As New mt
+            Dim nt As New Threading.Thread(AddressOf nc.Check_for_Update)
+            nt.Start()
+        End If
+        If Args_Background Then
+            NotifyIcon1.Visible = True
+            NotifyIcon1.ShowBalloonTip(2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
+            Me.Visible = False
+            'Me.Hide()
+            Hide_Run = True
+            Auto_Kill_Gameloader_Flag = 0
+            AutoKill_GameLoader.Start()
+        End If
     End Sub
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
@@ -498,4 +504,78 @@
 
         vMSG.Show()
     End Sub
+
+    Private Sub 打开目录ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 打开目录ToolStripMenuItem.Click
+        Diagnostics.Process.Start(Path_Info)
+    End Sub
+
+    Private Sub 重置配置ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 重置配置ToolStripMenuItem.Click
+        For Each vline In IO.Directory.GetFiles(Path_Info)
+            If IO.Path.GetExtension(vline).ToLower = ".ini" Then
+                Try
+                    IO.File.Delete(vline)
+                Catch ex As Exception
+
+                End Try
+            End If
+        Next
+        MsgBox("重置完毕，请重新打开软件")
+        Me.Close()
+    End Sub
+
+    Private Sub Button17_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button17.Click
+        With vMSG.TextBox1
+            .Clear()
+            .AppendText("该功能将获取游戏目录中所有文件访问权，并设置[正常访问]" + vbCrLf)
+            .AppendText("如需屏蔽插件，请待该操作结束后，再次禁用相关插件" + vbCrLf)
+            .AppendText("警告，该操作耗时较长（3~5分钟），请耐心等待" + vbCrLf)
+            vMSG.Mode = "getpremission"
+            vMSG.arg = (IO.Path.GetTempPath + "\takeown.exe").Replace("\\", "\")
+        End With
+        vMSG.Show()
+    End Sub
+
+    Private Sub 交流群421483534ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 交流群421483534ToolStripMenuItem.Click
+        Diagnostics.Process.Start("https://jq.qq.com/?_wv=1027&k=53KHmZj")
+    End Sub
+
+    Private Sub 赞助ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 赞助ToolStripMenuItem.Click
+        showmethemoney.Show()
+    End Sub
+
+    Private Sub GroupBox2_Resize(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles GroupBox2.Resize
+        'Dim leg = (sender.Width - 20) / 2
+        Dim myButtonLeft = New ArrayList
+        Dim myButtonRight = New ArrayList
+
+        '后台模式
+        myButtonLeft.Add(Button13)
+        'chkdsk
+        myButtonLeft.Add(Button8)
+        '访问权
+        myButtonLeft.Add(Button17)
+        'cpu
+        myButtonLeft.Add(Button7)
+        '删除tx管家
+        myButtonLeft.Add(Button10)
+        '删除安装包
+        myButtonLeft.Add(Button9)
+
+
+        'dnf.cfg
+        myButtonRight.Add(Button16)
+        'TGuardSvc
+        myButtonRight.Add(Button12)
+        'Update
+        myButtonRight.Add(Button11)
+        Dim mySize = New Point((sender.Width - 20) / 2, 23)
+        For Each vline In myButtonLeft
+            vline.Size = mySize
+        Next
+        For Each vline In myButtonRight
+            vline.Size = mySize
+            vline.left = myButtonLeft(0).Left + myButtonLeft(0).Width + 8
+        Next
+    End Sub
+
 End Class

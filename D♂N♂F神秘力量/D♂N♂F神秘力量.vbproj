@@ -98,6 +98,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="showmethemoney.Designer.vb">
+      <DependentUpon>showmethemoney.vb</DependentUpon>
+    </Compile>
+    <Compile Include="showmethemoney.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="vCode.vb" />
     <Compile Include="vList.Designer.vb">
       <DependentUpon>vList.vb</DependentUpon>
@@ -121,6 +127,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="showmethemoney.resx">
+      <DependentUpon>showmethemoney.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="vList.resx">
       <DependentUpon>vList.vb</DependentUpon>
@@ -147,6 +156,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="damotouicon.ico" />
+    <None Include="Resources\wx.png" />
     <None Include="Resources\help.txt" />
     <None Include="Resources\takeown.exe" />
     <None Include="Resources\VoCytDefenderEx.exe" />

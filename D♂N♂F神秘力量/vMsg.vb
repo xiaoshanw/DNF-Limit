@@ -1,7 +1,9 @@
 ﻿Public Class vMSG
+    Public vIntA, vIntB As Integer
     Public Mode As String
     Public arg As String
     Private Sub vMSG_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Button1.Enabled = True
         Select Case Mode
             Case ""
                 Button1.Text = "OK"
@@ -23,13 +25,25 @@
                 Button1.Text = "进入后台模式"
             Case "delcfg"
                 Button1.Text = "删除配置文件"
+            Case "getpremission"
+                Button1.Text = "获取权限"
             Case Else
                 Button1.Text = "OK"
         End Select
     End Sub
-
     Public Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         Select Case Button1.Text
+            Case "获取权限"
+                Button1.Enabled = False
+                TextBox1.AppendText("--------------------" + vbCrLf)
+                TextBox1.AppendText("准备中" + vbCrLf)
+                vIntB = Get_Files_Count(Main.GamePath.Text)
+                vIntA = 0
+                TextBox1.WordWrap = False
+                Get_Files_Premission(Main.GamePath.Text)
+                TextBox1.WordWrap = True
+                MsgBox("获取权限完毕")
+                Me.Close()
             Case "删除配置文件"
                 Try
                     IO.File.Delete(arg)
@@ -65,6 +79,7 @@
                 TextBox1.AppendText("--------------------" + vbCrLf)
                 Dim vLen As Long
                 For Each sFile As String In Public_ArrayList
+                    Button1.Enabled = False
                     Try
                         vLen = New IO.FileInfo(sFile).Length
                         IO.File.Delete(sFile)
@@ -88,8 +103,10 @@
                 Catch ex As Exception
 
                 End Try
+                Button1.Enabled = True
                 Button1.Text = "OK"
             Case "删除自动下载的可执行组件(TX管家等)"
+                Button1.Enabled = False
                 TextBox1.AppendText("--------------------" + vbCrLf)
                 For Each vString As String In {"\components", "\TGuard", "\TP_Temp"}
                     Try
@@ -103,6 +120,7 @@
 
                     End Try
                 Next
+                Button1.Enabled = True
                 Button1.Text = "OK"
             Case "停止并禁用TGuardSvc服务"
                 Disable_TGuardSvc()
@@ -148,6 +166,24 @@
                     If isPrint Then TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
                 End Try
             End If
+        Next
+    End Sub
+    Public Sub Get_Files_Premission(ByVal Path As String)
+        For Each vline In IO.Directory.GetFiles(Path)
+            Try
+                Dim myEx = New Exception
+                vIntA += 1
+                TextBox1.AppendText("[" + Format(vIntA / vIntB * 100, "0.#") + "% " + vIntA.ToString + "/" + vIntB.ToString + "]")
+                TextBox1.AppendText(IO.Path.GetFileName(vline))
+                Set_File_Security(vline, True, myEx)
+                TextBox1.AppendText("[OK]" + vbCrLf)
+            Catch ex As Exception
+                TextBox1.AppendText("[BAD]" + vbCrLf)
+            End Try
+            Application.DoEvents()
+        Next
+        For Each vline In IO.Directory.GetDirectories(Path)
+            Get_Files_Premission(vline)
         Next
     End Sub
 End Class
