@@ -169,11 +169,11 @@
         Next
     End Sub
     Public Sub Get_Files_Premission(ByVal Path As String)
+        Dim myEx = New Exception
         For Each vline In IO.Directory.GetFiles(Path)
             Try
-                Dim myEx = New Exception
                 vIntA += 1
-                TextBox1.AppendText("[" + Format(vIntA / vIntB * 100, "0.#") + "% " + vIntA.ToString + "/" + vIntB.ToString + "]")
+                TextBox1.AppendText("[" + Format(Math.Min(vIntA / vIntB, 1) * 100, "0.#") + "% " + vIntA.ToString + "/" + vIntB.ToString + "]")
                 TextBox1.AppendText(IO.Path.GetFileName(vline))
                 Set_File_Security(vline, True, myEx)
                 TextBox1.AppendText("[OK]" + vbCrLf)
@@ -183,6 +183,7 @@
             Application.DoEvents()
         Next
         For Each vline In IO.Directory.GetDirectories(Path)
+            Set_File_Security(vline, True, myEx)
             Get_Files_Premission(vline)
         Next
     End Sub

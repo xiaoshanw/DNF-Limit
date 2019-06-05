@@ -313,9 +313,10 @@
         With vMSG.TextBox1
             .Clear()
             .AppendText("该功能将自动检测并关闭下列启动器及插件：" + vbCrLf)
-            .AppendText("TenioDL.exe" + vbCrLf)
-            .AppendText("GameLoader.exe" + vbCrLf)
-            .AppendText("TesService.exe" + vbCrLf)
+            .AppendText("下载器：TenioDL.exe" + vbCrLf)
+            .AppendText("启动器：GameLoader.exe" + vbCrLf)
+            .AppendText("后台服务：TesService.exe" + vbCrLf)
+            .AppendText("注册服务：TGuard.exe" + vbCrLf)
             .AppendText("--------------------" + vbCrLf)
             .AppendText("如需运行软件自动进入后台模式，可在运行本程序时，添加 -b参数，如：" + vbCrLf)
             .AppendText("D♂N♂F神秘力量.exe -b" + vbCrLf)

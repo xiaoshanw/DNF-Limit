@@ -194,7 +194,7 @@
 
     Private Sub 文件读写模式ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 文件读写模式ToolStripMenuItem.Click
         Try
-            vData(Exl.SelectedRows(0).Cells(0).Value).Value = 2
+            vData(Exl.SelectedRows(0).Cells(0).Value).Value = 1
             PAppend("设置插件[" + vData(Exl.SelectedRows(0).Cells(0).Value).Name + "]默认[文件禁用模式]")
             Save_Data()
         Catch ex As Exception
@@ -204,7 +204,7 @@
 
     Private Sub 禁用ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 禁用ToolStripMenuItem.Click
         Try
-            vData(Exl.SelectedRows(0).Cells(0).Value).Value = 2
+            vData(Exl.SelectedRows(0).Cells(0).Value).Value = 0
             PAppend("设置插件[" + vData(Exl.SelectedRows(0).Cells(0).Value).Name + "]默认[禁用]")
             Save_Data()
         Catch ex As Exception
