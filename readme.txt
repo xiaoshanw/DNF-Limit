@@ -9,7 +9,11 @@ Win8、Win10版本：基于.net 4.5编译
 4、.net运行库下载地址:https://dotnet.microsoft.com/download/dotnet-framework
 5、XP用户建议使用.net2.0版本，下载地址https://www.microsoft.com/en-us/download/details.aspx?id=1639
 
-更新记录；
+更新记录：
+2019-06-24 Ver;0.0.2.8
+1.优化后台模式
+2.优化软件CPU架构
+
 2019-06-05 Ver;0.0.2.7
 1.修复[获取游戏全文件访问权]功能无法获取文件夹权限的BUG
 

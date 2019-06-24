@@ -48,6 +48,8 @@ Partial Class Main
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.还原ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.开机启动ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.气泡提示ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.关闭ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutoKill_GameLoader = New System.Windows.Forms.Timer(Me.components)
         Me.AutoKill_Kill = New System.Windows.Forms.Timer(Me.components)
@@ -328,21 +330,33 @@ Partial Class Main
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.还原ToolStripMenuItem, Me.关闭ToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.还原ToolStripMenuItem, Me.开机启动ToolStripMenuItem, Me.气泡提示ToolStripMenuItem, Me.关闭ToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(95, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(153, 114)
         '
         '还原ToolStripMenuItem
         '
         Me.还原ToolStripMenuItem.Name = "还原ToolStripMenuItem"
-        Me.还原ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
-        Me.还原ToolStripMenuItem.Text = "还原"
+        Me.还原ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.还原ToolStripMenuItem.Text = "显示窗口"
+        '
+        '开机启动ToolStripMenuItem
+        '
+        Me.开机启动ToolStripMenuItem.Name = "开机启动ToolStripMenuItem"
+        Me.开机启动ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.开机启动ToolStripMenuItem.Text = "开机启动"
+        '
+        '气泡提示ToolStripMenuItem
+        '
+        Me.气泡提示ToolStripMenuItem.Name = "气泡提示ToolStripMenuItem"
+        Me.气泡提示ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.气泡提示ToolStripMenuItem.Text = "气泡提示"
         '
         '关闭ToolStripMenuItem
         '
         Me.关闭ToolStripMenuItem.Name = "关闭ToolStripMenuItem"
-        Me.关闭ToolStripMenuItem.Size = New System.Drawing.Size(94, 22)
-        Me.关闭ToolStripMenuItem.Text = "关闭"
+        Me.关闭ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.关闭ToolStripMenuItem.Text = "关闭软件"
         '
         'AutoKill_GameLoader
         '
@@ -371,13 +385,13 @@ Partial Class Main
         '打开目录ToolStripMenuItem
         '
         Me.打开目录ToolStripMenuItem.Name = "打开目录ToolStripMenuItem"
-        Me.打开目录ToolStripMenuItem.Size = New System.Drawing.Size(118, 22)
+        Me.打开目录ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.打开目录ToolStripMenuItem.Text = "打开目录"
         '
         '重置配置ToolStripMenuItem
         '
         Me.重置配置ToolStripMenuItem.Name = "重置配置ToolStripMenuItem"
-        Me.重置配置ToolStripMenuItem.Size = New System.Drawing.Size(118, 22)
+        Me.重置配置ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.重置配置ToolStripMenuItem.Text = "重置配置"
         '
         '交流赞助ToolStripMenuItem
@@ -458,5 +472,7 @@ Partial Class Main
     Friend WithEvents 交流群421483534ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents 赞助ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ToolTip1 As System.Windows.Forms.ToolTip
+    Friend WithEvents 开机启动ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents 气泡提示ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -127,7 +127,8 @@
             Case "进入后台模式"
                 With Main
                     .NotifyIcon1.Visible = True
-                    .NotifyIcon1.ShowBalloonTip(2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
+                    ShowBalloonTipEx(.NotifyIcon1, 2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
+                    'TGuard_Tried_Sum = 0
                     .Visible = False
                     Auto_Kill_Gameloader_Flag = 0
                     .AutoKill_GameLoader.Start()
@@ -166,6 +167,19 @@
                     If isPrint Then TextBox1.AppendText("[失败][" + ex.Message + "]" + vbCrLf)
                 End Try
             End If
+        Next
+        Dim vProcess() As Process = Process.GetProcesses
+        For Each vline In vProcess
+            Select Case vline.ProcessName.ToLower
+                Case "tguard", "tguardsvc"
+                    If vline.MainModule.FileName.ToLower.Contains(TGuardSvc_Path.ToLower) Then
+                        Try
+                            vline.Kill()
+                        Catch ex As Exception
+
+                        End Try
+                    End If
+            End Select
         Next
     End Sub
     Public Sub Get_Files_Premission(ByVal Path As String)

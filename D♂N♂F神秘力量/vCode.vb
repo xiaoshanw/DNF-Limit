@@ -4,15 +4,19 @@
     Public Data_Version As Double = 2.4
     Public Update_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update"
     Public Update_Page As String = "http://bbs.colg.cn/thread-7393386-1-1.html"
+    Public TGuardSvc_Path As String = "C:\Program Files (x86)\Tencent\TGuard\"
+    Public Startup_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
     'Public VoCytDefenderEx_Path As String
     Public Public_ArrayList As ArrayList
     'Public vCurrend_File As String
     Public Hide_Run As Boolean = False
     Public Auto_Kill_Gameloader_Flag As Integer
+    Public Public_Date As Date
     Public Process_dnf As Process
     Public Path_Info As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName
     Public INI_Path = Path_Info + ("\list.ini").Replace("\\", "\")
     Public VCD_Path = (Path_Info + "\VoCytDefenderEx.exe").Replace("\\", "\")
+    'Public TGuard_Tried_Sum As Integer
     Public Addon_List_String() As String = {"TP3Helper.exe", _
                                             "TPHelper.exe", _
                                             "TPWeb.exe", _
@@ -27,7 +31,11 @@
                                             "GameDataPlatformClient.dll", _
                                             "res.vfs", _
                                             "DNFTips.dll"}
-
+    Public Sub Set_Application_Title()
+        Main.Text = "D♂N♂F神秘力量 Ver " + Get_Application_Version() + " "
+        If CanIFEO Then Main.Text += "[IFEO]" Else Main.Text += "[文件读写]"
+        Main.Text += " (Alpha Test) Powered by VoCyt" '    for 0.0.2.
+    End Sub
     Public Structure My_Data_Type
         Dim Name As String
         Dim Value As Integer
@@ -89,12 +97,6 @@
         End Try
         Return ""
     End Function
-
-    Public Sub Set_Application_Title()
-        Main.Text = "D♂N♂F神秘力量 Ver " + Get_Application_Version() + " "
-        If CanIFEO Then Main.Text += "[IFEO]" Else Main.Text += "[文件读写]"
-        Main.Text += " Powered by VoCyt" '   Alpha Test for 0.0.2.7
-    End Sub
     Public Sub Kill_Process()
         Dim s As String = "下列正在运行的程序可能会影响本软件运行，是否关闭？" + vbCrLf + "----------" + vbCrLf
         Dim vDNF_List() As String = {"CrossProxy", "TPHelper", "TQMCenter", "tgp_gamead", "GameLoader", "DNF"}
@@ -453,6 +455,12 @@
         
         Return eax
     End Function
+
+    Public Sub ShowBalloonTipEx(ByVal myNotifyIcon As Windows.Forms.NotifyIcon, ByVal timeout As Integer, ByVal tipTitle As String, ByVal tipText As String, ByVal tipIcon As Windows.Forms.ToolTipIcon)
+        If Main.气泡提示ToolStripMenuItem.Checked Then myNotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon)
+    End Sub
+
+
 End Module
 Class mt
     Public Sub Check_for_Update()

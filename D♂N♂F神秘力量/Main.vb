@@ -26,6 +26,8 @@
             vData = String_to_Data("")
         End If
 
+        气泡提示ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\NoBalloonTip")
+        开机启动ToolStripMenuItem.Checked = IO.File.Exists(Startup_Path + "\" + Application.ProductName + ".bat")
 
         'If CanIFEO = False Then MsgBox("权限不足，将采用[文件读写]模式" + vbCrLf + "[更新游戏]需要[恢复]！！！" + vbCrLf + "详情参阅帮助")
         Set_Application_Title()
@@ -47,7 +49,7 @@
         End If
         If Args_Background Then
             NotifyIcon1.Visible = True
-            NotifyIcon1.ShowBalloonTip(2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
+            ShowBalloonTipEx(NotifyIcon1, 2000, "开启后台模式", "将自动检测[启动器/启动插件]" + vbCrLf + "并在游戏成功运行后自动关闭[启动器/启动插件]", ToolTipIcon.Info)
             Me.Visible = False
             'Me.Hide()
             Hide_Run = True
@@ -316,10 +318,13 @@
             .AppendText("下载器：TenioDL.exe" + vbCrLf)
             .AppendText("启动器：GameLoader.exe" + vbCrLf)
             .AppendText("后台服务：TesService.exe" + vbCrLf)
-            .AppendText("注册服务：TGuard.exe" + vbCrLf)
+            .AppendText("注册服务：TGuardSvc.exe、TGuard.exe" + vbCrLf)
             .AppendText("--------------------" + vbCrLf)
             .AppendText("如需运行软件自动进入后台模式，可在运行本程序时，添加 -b参数，如：" + vbCrLf)
             .AppendText("D♂N♂F神秘力量.exe -b" + vbCrLf)
+            .AppendText("--------------------" + vbCrLf)
+            .AppendText("如需开机自启动后台模式，请在开启后台模式后，右键左下角图标进行设置" + vbCrLf)
+            .AppendText("启动文件目录位于：" + Startup_Path)
         End With
         vMSG.Mode = "background"
         vMSG.Show()
@@ -340,16 +345,31 @@
                     For Each vline As Process In vProcess
                         Select Case vline.ProcessName.ToLower
                             Case "teniodl", "gameloader" ', "tesservice"
-                                NotifyIcon1.ShowBalloonTip(2000, "提示", "检测到" + vline.ProcessName + "启动", ToolTipIcon.Info)
+                                ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到" + vline.ProcessName + "启动", ToolTipIcon.Info)
                                 Auto_Kill_Gameloader_Flag = 1
                                 AutoKill_GameLoader.Interval = 1000
+                                Public_Date = Now
+                            Case "tguard", "tguardsvc"
+                                If vline.MainModule.FileName.ToLower.Contains(TGuardSvc_Path.ToLower) Then
+                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到TGuardSvc服务", ToolTipIcon.Info)
+                                    vMSG.Disable_TGuardSvc(False)
+                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
+                                End If
                         End Select
                     Next
                 Case 1
+                    If DateDiff(DateInterval.Second, Public_Date, Now) > 1 * 3 Then
+                        Auto_Kill_Gameloader_Flag = 0
+                        AutoKill_GameLoader.Stop()
+                        AutoKill_Kill.Start()
+                        AutoKill_GameLoader.Interval = 5000
+                        Auto_Kill_Gameloader_Flag = 0
+                        Exit Sub
+                    End If
                     For Each vline As Process In vProcess
                         Select Case vline.ProcessName.ToLower
                             Case "dnf"
-                                NotifyIcon1.ShowBalloonTip(2000, "提示", "检测到" + vline.ProcessName + "启动" + vbCrLf + "等待游戏载入", ToolTipIcon.Info)
+                                ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到" + vline.ProcessName + "启动" + vbCrLf + "等待游戏载入", ToolTipIcon.Info)
                                 Auto_Kill_Gameloader_Flag = 2
                         End Select
                     Next
@@ -359,7 +379,7 @@
                             Case "dnf"
                                 'vline.Start()
                                 If vline.MainWindowTitle = "地下城与勇士" And DateDiff("s", vline.StartTime, Now) > 60 Then
-                                    NotifyIcon1.ShowBalloonTip(2000, "提示", vline.ProcessName + "启动成功" + vbCrLf + "将于10秒后结束残余启动器", ToolTipIcon.Info)
+                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", vline.ProcessName + "启动成功" + vbCrLf + "将于10秒后结束残余启动器", ToolTipIcon.Info)
                                     AutoKill_GameLoader.Stop()
                                     AutoKill_Kill.Start()
                                     AutoKill_GameLoader.Interval = 5000
@@ -414,7 +434,7 @@
                                 vline2.MainModule.FileName.ToString.ToLower.Contains("wegame") Then
                                     Try
                                         vline2.Kill()
-                                        NotifyIcon1.ShowBalloonTip(2000, "提示", "结束" + vline2.ProcessName + "成功", ToolTipIcon.Info)
+                                        ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "结束" + vline2.ProcessName + "成功", ToolTipIcon.Info)
                                     Catch ex2 As Exception
                                         'NotifyIcon1.ShowBalloonTip(2000, "警告", "结束" + vline2.ProcessName + "失败" + vbCrLf + ex2.Message, ToolTipIcon.Warning)
                                     End Try
@@ -423,7 +443,7 @@
                         Next
                     Case "tguardsvc", "tguard"
                         vMSG.Disable_TGuardSvc()
-                        NotifyIcon1.ShowBalloonTip(2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
+                        ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
                 End Select
             Next
         Catch ex As Exception
@@ -579,4 +599,23 @@
         Next
     End Sub
 
+    Private Sub 气泡提示ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 气泡提示ToolStripMenuItem.Click
+        If 气泡提示ToolStripMenuItem.Checked Then
+            IO.File.Create(Path_Info + "\NoBalloonTip").Close()
+        Else
+            IO.File.Delete(Path_Info + "\NoBalloonTip")
+        End If
+        气泡提示ToolStripMenuItem.Checked = Not 气泡提示ToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub 开机启动ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 开机启动ToolStripMenuItem.Click
+        Dim path = Startup_Path + "\" + Application.ProductName + ".bat"
+        If 开机启动ToolStripMenuItem.Checked Then
+            IO.File.Delete(path)
+        Else
+            Dim txt = """" + Application.ExecutablePath + """ -b"
+            IO.File.WriteAllText(path, txt, System.Text.Encoding.Default)
+        End If
+        开机启动ToolStripMenuItem.Checked = Not 开机启动ToolStripMenuItem.Checked
+    End Sub
 End Class
