@@ -358,7 +358,7 @@
                         End Select
                     Next
                 Case 1
-                    If DateDiff(DateInterval.Second, Public_Date, Now) > 1 * 3 Then
+                    If DateDiff(DateInterval.Second, Public_Date, Now) > 60 * 3 Then
                         Auto_Kill_Gameloader_Flag = 0
                         AutoKill_GameLoader.Stop()
                         AutoKill_Kill.Start()
@@ -613,7 +613,7 @@
         If 开机启动ToolStripMenuItem.Checked Then
             IO.File.Delete(path)
         Else
-            Dim txt = """" + Application.ExecutablePath + """ -b"
+            Dim txt = "start /d """ + Application.StartupPath + """ " + IO.Path.GetFileName(Application.ExecutablePath) + " -b"
             IO.File.WriteAllText(path, txt, System.Text.Encoding.Default)
         End If
         开机启动ToolStripMenuItem.Checked = Not 开机启动ToolStripMenuItem.Checked
