@@ -40,7 +40,7 @@
 
         If Exl.SelectedRows IsNot Nothing Then
             If Exl.SelectedRows.Count > 0 Then
-                If vSelectedRows <= Exl.Rows.Count Then Exl.Rows(vSelectedRows).Selected = True
+                If vSelectedRows < Exl.Rows.Count Then Exl.Rows(vSelectedRows).Selected = True
             End If
         End If
 
@@ -151,10 +151,6 @@
     End Sub
 
     Private Sub 删除组件ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 删除组件ToolStripMenuItem.Click
-        If Exl.Rows.Count <= 3 Then
-            MsgBox("原则上清单不得低于3个组件")
-            Exit Sub
-        End If
         Dim fData As ArrayList = New ArrayList
         For Each sData As My_Data_Type In vData
             fData.Add(sData)

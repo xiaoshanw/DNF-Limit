@@ -27,6 +27,7 @@
         End If
 
         气泡提示ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\NoBalloonTip")
+        自动删除rep文件ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\noDelrepFile")
         开机启动ToolStripMenuItem.Checked = IO.File.Exists(Startup_Path + "\" + Application.ProductName + ".bat")
 
         'If CanIFEO = False Then MsgBox("权限不足，将采用[文件读写]模式" + vbCrLf + "[更新游戏]需要[恢复]！！！" + vbCrLf + "详情参阅帮助")
@@ -118,8 +119,7 @@
         vList.Check_Status(False)
         PAppend("执行结束")
         If Bad = True Then PAppend("部分插件采用[文件读写]模式禁用，更新游戏建议还原插件，详情参阅[帮助]")
-        vMSG.Button1.Text = "停止并禁用TGuardSvc服务"
-        vMSG.Button1_Click(Me, e)
+        Disable_TGuardSvc_All(False)
     End Sub
 
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
@@ -268,38 +268,6 @@
         vMSG.Show()
     End Sub
 
-    Private Sub Button11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button11.Click
-        With vMSG.TextBox1
-            .Clear()
-            .AppendText("Win10用户频繁蓝屏，且蓝屏代码基本为下列两种：" + vbCrLf)
-            .AppendText("IRQL_NOT_LESS_OR_EQUAL" + vbCrLf)
-            .AppendText("DRIVER_IRQL_NOT_LESS_OR_EQUAL" + vbCrLf)
-            .AppendText("多为windows内核ntoskrnl.exe引发的蓝屏，ntoskrnl.exe为NT架构核心调度文件" + vbCrLf)
-            .AppendText("该蓝屏多为TP组件跟Win10内核冲突所致，无需怀疑你的系统，也无需怀疑TX的TP，总而言之是个玄学问题" + vbCrLf)
-            .AppendText("目前没有任何一个方法或者手段完全不让这个冲突导致蓝屏(至少这半年我没发现)" + vbCrLf)
-            .AppendText("包括更换VSDDrvDll.dll等方法，均有概率诱发蓝屏，表现为TP蓝框读条结束蓝屏，进游戏蓝屏，反复蓝屏" + vbCrLf)
-            .AppendText("--------------------" + vbCrLf)
-            .AppendText("解决方案：" + vbCrLf)
-            .AppendText("更新Win10 1809正式版" + vbCrLf)
-            .AppendText("更新Win10 1809正式版后，根据基友反馈，蓝屏概率大幅降低，应该与Win10内核审核权限有关" + vbCrLf)
-            .AppendText("偶尔蓝屏，重启计算机再登陆即恢复正常，而1803及之前的版本表现为反复蓝屏" + vbCrLf)
-            .AppendText("如果您不愿意更新，那么抱歉，游戏跟Win10选一个，或者与蓝为伴" + vbCrLf)
-            .AppendText("如果您收到了Win10 1809的推送，请尽快更新" + vbCrLf)
-            .AppendText("如果您未收到了Win10 1809的推送，可以按照如下方法开启预览更新" + vbCrLf)
-            .AppendText("--------------------" + vbCrLf)
-            .AppendText("Win10 1809预览更新：" + vbCrLf)
-            .AppendText("设置-更新和安全-Windows 预览体验计划" + vbCrLf)
-            .AppendText("获取Insider Preview内部版本-开始-选择账户-链接账户-登陆Microsoft账户" + vbCrLf)
-            .AppendText("希望接受哪类内容-跳到下一个Windows版本" + vbCrLf)
-            .AppendText("等待更新或手动更新" + vbCrLf)
-            .AppendText("--------------------" + vbCrLf)
-            .AppendText("注意，各个版本Win10打开预览更新的流程可能不相同，且我的Microsoft账户是开发者账户，所以流程上可能有细微差别")
-        End With
-        vMSG.Mode = ""
-        vMSG.Show()
-    End Sub
-
-
 
     Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
         With vMSG.TextBox1
@@ -333,7 +301,20 @@
     Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_GameLoader.Tick
 
         Try
+            '删除rep
             If Process_dnf IsNot Nothing Then
+                If 自动删除rep文件ToolStripMenuItem.Checked = True Then
+                    Dim repfiles = IO.Directory.GetFiles(GamePath.Text)
+                    For Each vline In repfiles
+                        If IO.Path.GetFileName(vline).ToLower Like "video_*.rep" Then
+                            Try
+                                IO.File.Delete(vline)
+                            Catch ex As Exception
+
+                            End Try
+                        End If
+                    Next
+                End If
                 If Process_dnf.HasExited = False Then Exit Sub
             End If
         Catch ex As Exception
@@ -352,7 +333,7 @@
                             Case "tguard", "tguardsvc"
                                 If vline.MainModule.FileName.ToLower.Contains(TGuardSvc_Path.ToLower) Then
                                     ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到TGuardSvc服务", ToolTipIcon.Info)
-                                    vMSG.Disable_TGuardSvc(False)
+                                    Disable_TGuardSvc_All(False)
                                     ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
                                 End If
                         End Select
@@ -417,7 +398,6 @@
         End If
     End Sub
 
-   
     Private Sub AutoKill_Kill_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_Kill.Tick
         Dim vProcess() As Process = Process.GetProcesses
         Dim sProcess() As Process
@@ -442,7 +422,7 @@
                             End If
                         Next
                     Case "tguardsvc", "tguard"
-                        vMSG.Disable_TGuardSvc()
+                        Disable_TGuardSvc_All(False)
                         ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
                 End Select
             Next
@@ -617,5 +597,42 @@
             IO.File.WriteAllText(path, txt, System.Text.Encoding.Default)
         End If
         开机启动ToolStripMenuItem.Checked = Not 开机启动ToolStripMenuItem.Checked
+    End Sub
+
+    Private Sub Button11_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button11.Click
+        With vMSG.TextBox1
+            .Clear()
+            .AppendText("该功能将删除游戏主目录下所有rep录像文件：" + vbCrLf)
+            .AppendText("--------------------" + vbCrLf)
+            Try
+                Public_ArrayList = New ArrayList
+                Scan_Files(GamePath.Text, Public_ArrayList, False)
+                If Public_ArrayList.Count = 0 Then
+                    .AppendText("无" + vbCrLf)
+                Else
+
+                    For Each sFile In Public_ArrayList
+                        If sFile.ToString.ToLower Like (GamePath.Text + "\video_*.rep").Replace("\\", "\").ToLower Then
+                            .AppendText("[" + Format(New IO.FileInfo(sFile).Length / 1024 / 1024, "#.##") + "MB]" + vbTab + IO.Path.GetFileName(sFile) + vbCrLf)
+                        End If
+                    Next
+                End If
+
+
+            Catch ex As Exception
+
+            End Try
+        End With
+        vMSG.Mode = "del_video_rep"
+        vMSG.Show()
+    End Sub
+
+    Private Sub 自动删除rep文件ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 自动删除rep文件ToolStripMenuItem.Click
+        If 自动删除rep文件ToolStripMenuItem.Checked Then
+            IO.File.Create(Path_Info + "\noDelrepFile").Close()
+        Else
+            IO.File.Delete(Path_Info + "\noDelrepFile")
+        End If
+        自动删除rep文件ToolStripMenuItem.Checked = Not 自动删除rep文件ToolStripMenuItem.Checked
     End Sub
 End Class

@@ -34,7 +34,7 @@
     Public Sub Set_Application_Title()
         Main.Text = "D♂N♂F神秘力量 Ver " + Get_Application_Version() + " "
         If CanIFEO Then Main.Text += "[IFEO]" Else Main.Text += "[文件读写]"
-        Main.Text += " (Alpha Test) Powered by VoCyt" '    for 0.0.2.
+        Main.Text += "  Powered by VoCyt" '    for 0.0.2.
     End Sub
     Public Structure My_Data_Type
         Dim Name As String
@@ -328,11 +328,13 @@
             MyReg.SetValue("FeatureSettingsOverrideMask", 3, Microsoft.Win32.RegistryValueKind.DWord)
         End If
     End Sub
-    Public Sub Scan_Files(ByVal vPath As String, ByRef vFile As ArrayList)
+    Public Sub Scan_Files(ByVal vPath As String, ByRef vFile As ArrayList, Optional ByVal Scan_Child As Boolean = True)
         Try
-            For Each sPath As String In IO.Directory.GetDirectories(vPath)
-                Scan_Files(sPath, vFile)
-            Next
+            If Scan_Child Then
+                For Each sPath As String In IO.Directory.GetDirectories(vPath)
+                    Scan_Files(sPath, vFile)
+                Next
+            End If
             For Each sFile As String In IO.Directory.GetFiles(vPath)
                 vFile.Add(sFile)
             Next

@@ -76,6 +76,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DisableTGuardSvc.vb" />
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>

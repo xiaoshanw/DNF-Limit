@@ -10,6 +10,10 @@ Win8、Win10版本：基于.net 4.5编译
 5、XP用户建议使用.net2.0版本，下载地址https://www.microsoft.com/en-us/download/details.aspx?id=1639
 
 更新记录：
+2019-XX-XX Ver:0.0.3.0
+1.修复程序窗体过小导致TX全家桶栏显示不全的BUG
+2.修复手动模式删除最后一个插件导致程序崩溃的问题
+
 2019-06-28 Ver:0.0.2.9
 1.紧急修复后台模式无法使用的BUG
 2.优化启动参数
