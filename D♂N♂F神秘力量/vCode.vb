@@ -3,6 +3,7 @@
     Public CanIFEO As Boolean
     Public Data_Version As Double = 2.4
     Public Update_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update"
+    Public Update_Page_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update-page"
     Public Update_Page As String = "http://bbs.colg.cn/thread-7393386-1-1.html"
     Public TGuardSvc_Path As String = "C:\Program Files (x86)\Tencent\TGuard\"
     Public Startup_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
@@ -467,17 +468,36 @@ End Module
 Class mt
     Public Sub Check_for_Update()
         Dim nowversion As Integer = vCode.Get_Application_Version().Replace(".", "")
-        Dim tmp As String = IO.Path.GetTempFileName
+        Dim tpf As String = IO.Path.GetTempFileName
+        Dim str As String
+        Dim strex() As String = {}
         Dim latestversion As Integer = 0
         Try
-            My.Computer.Network.DownloadFile(Update_URL, tmp, "", "", False, 500, True)
-            tmp = IO.File.ReadAllText(tmp)
-            If IsNumeric(tmp.Replace(".", "")) Then latestversion = CInt(tmp.Replace(".", ""))
+            My.Computer.Network.DownloadFile(Update_URL, tpf, "", "", False, 500, True)
+            str = IO.File.ReadAllText(tpf)
+            strex = Split(str, vbCrLf)
+            If strex.Length > 0 Then
+                If IsNumeric(strex(0).Replace(".", "")) Then latestversion = CInt(strex(0).Replace(".", ""))
+            End If
+            IO.File.Delete(tpf)
         Catch ex As Exception
 
         End Try
         If latestversion > nowversion Then
+            'If True Then
             If MsgBox("已有新版本更新，是否跳转至程序发布/更新网页？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                Try
+                    If strex.Length > 1 Then
+                        If strex(1) = "1" Then
+                            tpf = IO.Path.GetTempFileName
+                            My.Computer.Network.DownloadFile(Update_Page_URL, tpf, "", "", False, 500, True)
+                            Update_Page = IO.File.ReadAllText(tpf)
+                            IO.File.Delete(tpf)
+                        End If
+                    End If
+                Catch ex As Exception
+
+                End Try
                 Diagnostics.Process.Start(Update_Page)
             End If
         End If

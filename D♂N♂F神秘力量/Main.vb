@@ -250,7 +250,7 @@
             .AppendText("TP_Temp：TP临时文件夹" + vbCrLf)
 
             Try
-                
+                Public_ArrayList = New ArrayList
                 If Public_ArrayList.Count = 0 Then
                     .AppendText("无" + vbCrLf)
                 Else
