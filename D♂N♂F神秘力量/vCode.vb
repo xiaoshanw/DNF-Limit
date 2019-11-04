@@ -4,7 +4,7 @@
     Public Data_Version As Double = 2.4
     Public Update_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update"
     Public Update_Page_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update-page"
-    Public Update_Page As String = "http://bbs.colg.cn/thread-7393386-1-1.html"
+    Public Update_Page As String = "http://bbs.colg.cn/thread-7613039-1-1.html"
     Public TGuardSvc_Path As String = "C:\Program Files (x86)\Tencent\TGuard\"
     Public Startup_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
     'Public VoCytDefenderEx_Path As String

@@ -36,6 +36,7 @@ Partial Class Main
         Me.GamePath = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button18 = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.Button17 = New System.Windows.Forms.Button()
         Me.Button16 = New System.Windows.Forms.Button()
@@ -48,6 +49,7 @@ Partial Class Main
         Me.NotifyIcon1 = New System.Windows.Forms.NotifyIcon(Me.components)
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.还原ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.自动删除rep文件ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.开机启动ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.气泡提示ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.关闭ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -61,7 +63,7 @@ Partial Class Main
         Me.交流群421483534ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.赞助ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.自动删除rep文件ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Button19 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -208,6 +210,8 @@ Partial Class Main
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.Button19)
+        Me.GroupBox2.Controls.Add(Me.Button18)
         Me.GroupBox2.Controls.Add(Me.Button11)
         Me.GroupBox2.Controls.Add(Me.Button17)
         Me.GroupBox2.Controls.Add(Me.Button16)
@@ -223,6 +227,18 @@ Partial Class Main
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "附加功能(绿色常用、红色危险、黑色普通，鼠标停留显示简介)"
+        '
+        'Button18
+        '
+        Me.Button18.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button18.ForeColor = System.Drawing.Color.Red
+        Me.Button18.Location = New System.Drawing.Point(340, 165)
+        Me.Button18.Name = "Button18"
+        Me.Button18.Size = New System.Drawing.Size(331, 23)
+        Me.Button18.TabIndex = 10
+        Me.Button18.Text = "一键蓝屏"
+        Me.ToolTip1.SetToolTip(Me.Button18, "一键蓝屏，强迫症专用")
+        Me.Button18.UseVisualStyleBackColor = True
         '
         'Button11
         '
@@ -333,13 +349,19 @@ Partial Class Main
         '
         Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.还原ToolStripMenuItem, Me.自动删除rep文件ToolStripMenuItem, Me.开机启动ToolStripMenuItem, Me.气泡提示ToolStripMenuItem, Me.关闭ToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(161, 136)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(161, 114)
         '
         '还原ToolStripMenuItem
         '
         Me.还原ToolStripMenuItem.Name = "还原ToolStripMenuItem"
         Me.还原ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
         Me.还原ToolStripMenuItem.Text = "显示窗口"
+        '
+        '自动删除rep文件ToolStripMenuItem
+        '
+        Me.自动删除rep文件ToolStripMenuItem.Name = "自动删除rep文件ToolStripMenuItem"
+        Me.自动删除rep文件ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
+        Me.自动删除rep文件ToolStripMenuItem.Text = "自动删除rep文件"
         '
         '开机启动ToolStripMenuItem
         '
@@ -414,11 +436,17 @@ Partial Class Main
         Me.赞助ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
         Me.赞助ToolStripMenuItem.Text = "赞助の二♂维♂码"
         '
-        '自动删除rep文件ToolStripMenuItem
+        'Button19
         '
-        Me.自动删除rep文件ToolStripMenuItem.Name = "自动删除rep文件ToolStripMenuItem"
-        Me.自动删除rep文件ToolStripMenuItem.Size = New System.Drawing.Size(160, 22)
-        Me.自动删除rep文件ToolStripMenuItem.Text = "自动删除rep文件"
+        Me.Button19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button19.ForeColor = System.Drawing.Color.Red
+        Me.Button19.Location = New System.Drawing.Point(340, 136)
+        Me.Button19.Name = "Button19"
+        Me.Button19.Size = New System.Drawing.Size(331, 23)
+        Me.Button19.TabIndex = 11
+        Me.Button19.Text = "一键卸载DNF"
+        Me.ToolTip1.SetToolTip(Me.Button19, "终极优化方案")
+        Me.Button19.UseVisualStyleBackColor = True
         '
         'Main
         '
@@ -482,5 +510,7 @@ Partial Class Main
     Friend WithEvents 气泡提示ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Button11 As System.Windows.Forms.Button
     Friend WithEvents 自动删除rep文件ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Button18 As System.Windows.Forms.Button
+    Friend WithEvents Button19 As System.Windows.Forms.Button
 
 End Class

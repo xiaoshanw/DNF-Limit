@@ -106,6 +106,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="vCode.vb" />
+    <Compile Include="vDark.vb" />
     <Compile Include="vList.Designer.vb">
       <DependentUpon>vList.vb</DependentUpon>
     </Compile>

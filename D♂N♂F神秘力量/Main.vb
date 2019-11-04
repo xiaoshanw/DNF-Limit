@@ -635,4 +635,21 @@
         End If
         自动删除rep文件ToolStripMenuItem.Checked = Not 自动删除rep文件ToolStripMenuItem.Checked
     End Sub
+
+    Private Sub Button18_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button18.Click
+        If MsgBox("此按钮是给某些勇士使用的，如果您不是天选之勇士，请取消", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+            If MsgBox("确定要触发蓝屏吗(请保存好所有正在编辑的文档)", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                If MsgBox("真的要触发蓝屏吗（这句话不是开玩笑）", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    vMSG.Show()
+                    vBSOD()
+                End If
+            End If
+        End If
+    End Sub
+
+    Private Sub Button19_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button19.Click
+        If IO.File.Exists(GamePath.Text + "\地下城与勇士卸载.exe") Then
+            Shell((GamePath.Text + "\地下城与勇士卸载.exe").Replace("\\", "\"))
+        End If
+    End Sub
 End Class
