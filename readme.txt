@@ -10,6 +10,9 @@ Win8、Win10版本：基于.net 4.5编译
 5、XP用户建议使用.net2.0版本，下载地址https://www.microsoft.com/en-us/download/details.aspx?id=1639
 
 更新记录：
+2019-09-11 Ver:0.0.3.1
+1.添加一些有趣的东西
+
 2019-09-11 Ver:0.0.3.0
 1.优化更新方式，支持自定义更新地址
 
