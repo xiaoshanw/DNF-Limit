@@ -473,7 +473,7 @@ Class mt
         Dim strex() As String = {}
         Dim latestversion As Integer = 0
         Try
-            My.Computer.Network.DownloadFile(Update_URL, tpf, "", "", False, 500, True)
+            My.Computer.Network.DownloadFile(Update_URL, tpf, "", "", False, 5000, True)
             str = IO.File.ReadAllText(tpf)
             strex = Split(str, vbCrLf)
             If strex.Length > 0 Then

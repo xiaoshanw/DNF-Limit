@@ -447,7 +447,7 @@
     Private Sub Button14_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button14.Click
         Dim str As String = Find_DNF_Path()
         If str = "" Then
-            MsgBox("[注册表/默认安装路径/常规路径]均无DNF路径信息，无法检测DNF游戏路径" + +vbCrLf + vbCrLf + "请手动指定DNF游戏路径")
+            MsgBox("[注册表/默认安装路径/常规路径]均无DNF路径信息，无法检测DNF游戏路径" + vbCrLf + vbCrLf + "请手动指定DNF游戏路径")
         Else
             GamePath.Text = str
         End If
@@ -569,6 +569,10 @@
         myButtonRight.Add(Button12)
         'Update
         myButtonRight.Add(Button11)
+        '卸载
+        myButtonRight.Add(Button19)
+        '蓝屏
+        myButtonRight.Add(Button18)
         Dim mySize = New Point((sender.Width - 20) / 2, 23)
         For Each vline In myButtonLeft
             vline.Size = mySize
@@ -652,4 +656,155 @@
             Shell((GamePath.Text + "\地下城与勇士卸载.exe").Replace("\\", "\"))
         End If
     End Sub
+
+    '-----------------------------
+#Region "sys"
+
+
+    Dim SC_MANAGER_CREATE_SERVICE = 2
+    Dim SERVICE_START = 16
+    Dim SERVICE_KERNEL_DRIVER = 1
+    Dim SERVICE_DEMAND_START = 3
+    Dim SERVICE_ERROR_IGNORE = 0
+    <System.Runtime.InteropServices.DllImport("advapi32.dll", SetLastError:=True)> _
+    Private Shared Function OpenSCManager(ByVal machineName As String, ByVal databaseName As String, ByVal dwAccess As UInteger) As IntPtr
+    End Function
+    <System.Runtime.InteropServices.DllImport("advapi32.dll", SetLastError:=True)> _
+    Private Shared Function CreateService(ByVal hSCManager As IntPtr, ByVal lpServiceName As String, ByVal lpDisplayName As String, ByVal dwDesiredAccess As Integer, ByVal dwServiceType As Integer, ByVal dwStartType As Integer, ByVal dwErrorControl As Integer, ByVal lpBinaryPathName As String, ByVal lpLoadOrderGroup As String, ByVal lpdwTagId As Integer, ByVal lpDependencies As Integer, ByVal lpServiceStartName As Integer, ByVal lpPassword As Integer) As IntPtr
+    End Function
+    <System.Runtime.InteropServices.DllImport("advapi32.dll", SetLastError:=True)> _
+    Private Shared Function OpenService(ByVal hSCManager As IntPtr, ByVal lpServiceName As String, ByVal dwDesiredAccess As UInteger) As IntPtr
+    End Function
+    <System.Runtime.InteropServices.DllImport("advapi32.dll", SetLastError:=True)> _
+    Private Shared Function CloseServiceHandle(ByVal serviceHandle As IntPtr) As Boolean
+    End Function
+    <System.Runtime.InteropServices.DllImport("advapi32.dll", SetLastError:=True)> _
+    Private Shared Function StartService(ByVal hService As IntPtr, ByVal dwNumServiceArgs As Integer, ByVal lpServiceArgVectors As String()) As Boolean
+    End Function
+    <System.Runtime.InteropServices.DllImport("advapi32.dll", SetLastError:=True)> _
+    Public Shared Function ControlService(ByVal hService As IntPtr, ByVal dwControl As SERVICE_CONTROL, ByRef lpServiceStatus As SERVICE_STATUS) As Boolean
+    End Function
+    <System.Runtime.InteropServices.DllImport("kernel32.dll")> _
+    Public Shared Function GetLastError() As UInteger
+    End Function
+    Public Enum SERVICE_CONTROL As Integer
+        [STOP] = &H1
+        PAUSE = &H2
+        CONTINUE_fix = &H3
+        INTERROGATE = &H4
+        SHUTDOWN = &H5
+        PARAMCHANGE = &H6
+        NETBINDADD = &H7
+        NETBINDREMOVE = &H8
+        NETBINDENABLE = &H9
+        NETBINDDISABLE = &HA
+        DEVICEEVENT = &HB
+        HARDWAREPROFILECHANGE = &HC
+        POWEREVENT = &HD
+        SESSIONCHANGE = &HE
+    End Enum
+    Public Enum SERVICE_STATE As Integer
+        SERVICE_STOPPED = &H1
+        SERVICE_START_PENDING = &H2
+        SERVICE_STOP_PENDING = &H3
+        SERVICE_RUNNING = &H4
+        SERVICE_CONTINUE_PENDING = &H5
+        SERVICE_PAUSE_PENDING = &H6
+        SERVICE_PAUSED = &H7
+    End Enum
+    Public Structure SERVICE_STATUS
+        Dim dwServiceType As Int32
+        Dim dwCurrentState As Int32
+        Dim dwControlsAccepted As Int32
+        Dim dwWin32ExitCode As Int32
+        Dim dwServiceSpecificExitCode As Int32
+        Dim dwCheckPoint As Int32
+        Dim dwWaitHint As Int32
+    End Structure
+    Public Enum SERVICE_ACCEPT As Integer
+        [STOP] = &H1
+        PAUSE_CONTINUE = &H2
+        SHUTDOWN = &H4
+        PARAMCHANGE = &H8
+        NETBINDCHANGE = &H10
+        HARDWAREPROFILECHANGE = &H20
+        POWEREVENT = &H40
+        SESSIONCHANGE = &H80
+    End Enum
+
+    Private Sub Button20_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button20.Click
+        '           IntPtr hSCManager = OpenSCManager(null, null, SC_MANAGER_CREATE_SERVICE);
+        '打开服务管理器
+        Dim hSCManager = OpenSCManager(Nothing, Nothing, SC_MANAGER_CREATE_SERVICE)
+        '注册驱动
+        Dim hService = CreateService(hSCManager, "vlimit-d", "vlimit-d", SERVICE_START, SERVICE_KERNEL_DRIVER, SERVICE_DEMAND_START, SERVICE_ERROR_IGNORE, "C:\Users\VoCyt\Downloads\instdrv驱动加载工具win7\vlimit-d.sys", 0, 0, 0, 0, 0)
+        If hService = 0 Then
+            '未注册注册
+            '打开服务
+            hService = OpenService(hSCManager, "vlimit-d", SERVICE_START)
+            CloseServiceHandle(hSCManager)
+        End If
+        Try
+            StartService(hService, 0, Nothing)
+            CloseServiceHandle(hService)
+            Dim regist As Microsoft.Win32.RegistryKey = Microsoft.Win32.Registry.LocalMachine
+            Dim svcreg As Microsoft.Win32.RegistryKey = regist.OpenSubKey("SYSTEM\CurrentControlSet\Services\vlimit-d", True)
+            svcreg.SetValue("Start", 2, Microsoft.Win32.RegistryValueKind.DWord)
+            svcreg.Flush()
+
+        Catch ex As Exception
+
+        End Try
+
+
+    End Sub
+
+    Private Sub Button21_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button21.Click
+        Dim ServiceInstallerObj = New ServiceProcess.ServiceInstaller
+        Dim Context = New System.Configuration.Install.InstallContext("C:\Users\VoCyt\Downloads\instdrv驱动加载工具win7\123.txt", Nothing)
+        ServiceInstallerObj.Context = Context
+        ServiceInstallerObj.ServiceName = "vlimit-d"
+        ServiceInstallerObj.Uninstall(Nothing)
+        
+    End Sub
+
+    Private Sub Button22_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button22.Click
+        Dim ServiceInstallerObj = New ServiceProcess.ServiceInstaller
+        Dim Context = New System.Configuration.Install.InstallContext("C:\Users\VoCyt\Downloads\instdrv驱动加载工具win7\123.txt", Nothing)
+        ServiceInstallerObj.Context = Context
+        ServiceInstallerObj.ServiceName = "vlimit-d"
+        ServiceInstallerObj.Uninstall(Nothing)
+    End Sub
+#End Region
+
+
+    Private Sub Button23_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button23.Click
+        If Is64Bit() = False Then
+            MsgBox("仅64位系统可用")
+            Exit Sub
+        End If
+        vLimit.ShowDialog()
+    End Sub
+    Private Function Is64Bit() As Boolean
+        Dim addr = ""
+        Try
+            Dim vContOption = New System.Management.ConnectionOptions
+            Dim vMS = New System.Management.ManagementScope("\\localhost", vContOption)
+            Dim vQuery = New System.Management.ObjectQuery("select AddressWidth from Win32_Processor")
+            Dim vSearcher = New System.Management.ManagementObjectSearcher(vMS, vQuery)
+            Dim vObjectCollection = vSearcher.Get()
+            For Each vObject In vObjectCollection
+                addr = vObject("AddressWidth").ToString()
+            Next
+            If Int32.Parse(addr) = 64 Then
+                Return True
+            End If
+        Catch ex As Exception
+
+        End Try
+        Return False
+    End Function
+
+
+
 End Class

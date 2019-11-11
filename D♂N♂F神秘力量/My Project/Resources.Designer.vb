@@ -129,6 +129,48 @@ Namespace My.Resources
         '''<summary>
         '''  查找 System.Byte[] 类型的本地化资源。
         '''</summary>
+        Friend ReadOnly Property vLimit_d() As Byte()
+            Get
+                Dim obj As Object = ResourceManager.GetObject("vLimit_d", resourceCulture)
+                Return CType(obj,Byte())
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找类似 vLimit-d 说明文档 
+        '''Powered by VoCyt
+        '''2019-11-11
+        '''
+        '''使用说明：
+        '''通过加载驱动，在系统底层实现拦截一切可执行程序（EXE）的启动
+        '''
+        '''按钮说明：
+        '''注册驱动服务：将启动文件注册成&quot;vLimit-d&quot;服务
+        '''加载驱动程序：启动&quot;vLimit-d&quot;服务，并将启动模式设置成&quot;开机自动启动&quot;
+        '''卸载驱动程序：停止&quot;vLimit-d&quot;服务，并将启动模式设置成&quot;禁用&quot;
+        '''删除驱动服务：删除&quot;vLimit-d&quot;服务及驱动程序
+        '''同步清单：同步普通模式拦截清单到&quot;vLimit-d&quot;清单
+        '''
+        '''关于驱动签名：
+        '''因微软不开放个人驱动签名，且每次开机禁用驱动签名较为繁琐
+        '''固驱动签名采用互联网&quot;已吊销签名&quot;，签名机构为上海域联软件技术有限公司
+        '''签名状态为&quot;证书已被颁发者直接吊销&quot;
+        '''
+        '''特别强调：
+        '''1、驱动程序默认路径为%localappdata%\D♂N♂F神秘力量\vLimit-d.sys
+        '''2、因驱动特殊性，如果出现因&quot;vLimit.sys&quot;诱发蓝屏等情况，请立即卸载并删除驱动程序
+        '''3、因驱动特殊性，限制拦截规则为100条
+        '''4、可通过DebugView查看KdPrint [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        '''</summary>
+        Friend ReadOnly Property vLimit_d说明() As String
+            Get
+                Return ResourceManager.GetString("vLimit_d说明", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  查找 System.Byte[] 类型的本地化资源。
+        '''</summary>
         Friend ReadOnly Property VoCytDefenderEx() As Byte()
             Get
                 Dim obj As Object = ResourceManager.GetObject("VoCytDefenderEx", resourceCulture)

@@ -62,7 +62,6 @@
                 vline = svc(i)
             End If
         Next
-
         If vline Is Nothing Then
             If isPrint Then vMSG.TextBox1.AppendText("服务状态：未找到" + vbCrLf + "设置禁用：")
             If Disable_TGuardSvc_Command() = True Then

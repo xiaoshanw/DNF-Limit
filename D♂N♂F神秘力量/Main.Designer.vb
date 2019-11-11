@@ -25,6 +25,7 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button23 = New System.Windows.Forms.Button()
         Me.Button15 = New System.Windows.Forms.Button()
         Me.Button14 = New System.Windows.Forms.Button()
         Me.Button6 = New System.Windows.Forms.Button()
@@ -36,6 +37,11 @@ Partial Class Main
         Me.GamePath = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button22 = New System.Windows.Forms.Button()
+        Me.Button21 = New System.Windows.Forms.Button()
+        Me.TextBox1 = New System.Windows.Forms.TextBox()
+        Me.Button20 = New System.Windows.Forms.Button()
+        Me.Button19 = New System.Windows.Forms.Button()
         Me.Button18 = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
         Me.Button17 = New System.Windows.Forms.Button()
@@ -63,7 +69,6 @@ Partial Class Main
         Me.交流群421483534ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.赞助ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
-        Me.Button19 = New System.Windows.Forms.Button()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -74,6 +79,7 @@ Partial Class Main
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.Button23)
         Me.GroupBox1.Controls.Add(Me.Button15)
         Me.GroupBox1.Controls.Add(Me.Button14)
         Me.GroupBox1.Controls.Add(Me.Button6)
@@ -90,6 +96,19 @@ Partial Class Main
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "TX全家桶"
+        '
+        'Button23
+        '
+        Me.Button23.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button23.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Button23.ForeColor = System.Drawing.Color.Green
+        Me.Button23.Location = New System.Drawing.Point(340, 76)
+        Me.Button23.Name = "Button23"
+        Me.Button23.Size = New System.Drawing.Size(203, 23)
+        Me.Button23.TabIndex = 12
+        Me.Button23.Text = "vLimit-d驱动拦截"
+        Me.ToolTip1.SetToolTip(Me.Button23, "通过加载驱动文件禁用可执行文件")
+        Me.Button23.UseVisualStyleBackColor = True
         '
         'Button15
         '
@@ -159,7 +178,7 @@ Partial Class Main
         Me.Button2.ForeColor = System.Drawing.Color.Green
         Me.Button2.Location = New System.Drawing.Point(6, 76)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(537, 23)
+        Me.Button2.Size = New System.Drawing.Size(328, 23)
         Me.Button2.TabIndex = 6
         Me.Button2.Text = "一键禁用(全家桶组件)"
         Me.ToolTip1.SetToolTip(Me.Button2, "标准禁用，保留连发、换装，适合绝大多数玩家")
@@ -195,6 +214,7 @@ Partial Class Main
         Me.GamePath.Name = "GamePath"
         Me.GamePath.Size = New System.Drawing.Size(444, 21)
         Me.GamePath.TabIndex = 4
+        Me.GamePath.Text = "C:\Users\VoCyt\Downloads\instdrv驱动加载工具win7\vLimit-d.sys"
         '
         'Label1
         '
@@ -210,6 +230,10 @@ Partial Class Main
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.Button22)
+        Me.GroupBox2.Controls.Add(Me.Button21)
+        Me.GroupBox2.Controls.Add(Me.TextBox1)
+        Me.GroupBox2.Controls.Add(Me.Button20)
         Me.GroupBox2.Controls.Add(Me.Button19)
         Me.GroupBox2.Controls.Add(Me.Button18)
         Me.GroupBox2.Controls.Add(Me.Button11)
@@ -228,6 +252,52 @@ Partial Class Main
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "附加功能(绿色常用、红色危险、黑色普通，鼠标停留显示简介)"
         '
+        'Button22
+        '
+        Me.Button22.Location = New System.Drawing.Point(445, 107)
+        Me.Button22.Name = "Button22"
+        Me.Button22.Size = New System.Drawing.Size(27, 23)
+        Me.Button22.TabIndex = 14
+        Me.Button22.Text = "Button22"
+        Me.Button22.UseVisualStyleBackColor = True
+        '
+        'Button21
+        '
+        Me.Button21.Location = New System.Drawing.Point(399, 105)
+        Me.Button21.Name = "Button21"
+        Me.Button21.Size = New System.Drawing.Size(27, 23)
+        Me.Button21.TabIndex = 13
+        Me.Button21.Text = "Button21"
+        Me.Button21.UseVisualStyleBackColor = True
+        '
+        'TextBox1
+        '
+        Me.TextBox1.Location = New System.Drawing.Point(478, 106)
+        Me.TextBox1.Name = "TextBox1"
+        Me.TextBox1.Size = New System.Drawing.Size(193, 21)
+        Me.TextBox1.TabIndex = 12
+        '
+        'Button20
+        '
+        Me.Button20.Location = New System.Drawing.Point(340, 107)
+        Me.Button20.Name = "Button20"
+        Me.Button20.Size = New System.Drawing.Size(43, 23)
+        Me.Button20.TabIndex = 0
+        Me.Button20.Text = "Button20"
+        Me.Button20.UseVisualStyleBackColor = True
+        '
+        'Button19
+        '
+        Me.Button19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button19.ForeColor = System.Drawing.Color.Red
+        Me.Button19.Location = New System.Drawing.Point(340, 136)
+        Me.Button19.Name = "Button19"
+        Me.Button19.Size = New System.Drawing.Size(331, 23)
+        Me.Button19.TabIndex = 11
+        Me.Button19.Text = "一键卸载DNF"
+        Me.ToolTip1.SetToolTip(Me.Button19, "终极优化方案")
+        Me.Button19.UseVisualStyleBackColor = True
+        '
         'Button18
         '
         Me.Button18.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
@@ -242,6 +312,7 @@ Partial Class Main
         '
         'Button11
         '
+        Me.Button11.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button11.Location = New System.Drawing.Point(340, 20)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(331, 23)
@@ -252,6 +323,8 @@ Partial Class Main
         '
         'Button17
         '
+        Me.Button17.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button17.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Button17.ForeColor = System.Drawing.Color.Green
         Me.Button17.Location = New System.Drawing.Point(6, 78)
@@ -264,6 +337,7 @@ Partial Class Main
         '
         'Button16
         '
+        Me.Button16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button16.Location = New System.Drawing.Point(340, 49)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(331, 23)
@@ -274,6 +348,8 @@ Partial Class Main
         '
         'Button13
         '
+        Me.Button13.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button13.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Button13.ForeColor = System.Drawing.Color.Green
         Me.Button13.Location = New System.Drawing.Point(6, 20)
@@ -286,6 +362,7 @@ Partial Class Main
         '
         'Button12
         '
+        Me.Button12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button12.Location = New System.Drawing.Point(340, 78)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(331, 23)
@@ -296,6 +373,8 @@ Partial Class Main
         '
         'Button10
         '
+        Me.Button10.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button10.ForeColor = System.Drawing.Color.Red
         Me.Button10.Location = New System.Drawing.Point(6, 136)
         Me.Button10.Name = "Button10"
@@ -307,6 +386,8 @@ Partial Class Main
         '
         'Button9
         '
+        Me.Button9.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button9.ForeColor = System.Drawing.Color.Red
         Me.Button9.Location = New System.Drawing.Point(6, 165)
         Me.Button9.Name = "Button9"
@@ -318,6 +399,8 @@ Partial Class Main
         '
         'Button8
         '
+        Me.Button8.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button8.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
         Me.Button8.ForeColor = System.Drawing.Color.Green
         Me.Button8.Location = New System.Drawing.Point(6, 49)
@@ -330,6 +413,8 @@ Partial Class Main
         '
         'Button7
         '
+        Me.Button7.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Button7.ForeColor = System.Drawing.Color.Red
         Me.Button7.Location = New System.Drawing.Point(6, 107)
         Me.Button7.Name = "Button7"
@@ -436,18 +521,6 @@ Partial Class Main
         Me.赞助ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
         Me.赞助ToolStripMenuItem.Text = "赞助の二♂维♂码"
         '
-        'Button19
-        '
-        Me.Button19.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button19.ForeColor = System.Drawing.Color.Red
-        Me.Button19.Location = New System.Drawing.Point(340, 136)
-        Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(331, 23)
-        Me.Button19.TabIndex = 11
-        Me.Button19.Text = "一键卸载DNF"
-        Me.ToolTip1.SetToolTip(Me.Button19, "终极优化方案")
-        Me.Button19.UseVisualStyleBackColor = True
-        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -465,6 +538,7 @@ Partial Class Main
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
+        Me.GroupBox2.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
@@ -512,5 +586,10 @@ Partial Class Main
     Friend WithEvents 自动删除rep文件ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Button18 As System.Windows.Forms.Button
     Friend WithEvents Button19 As System.Windows.Forms.Button
+    Friend WithEvents Button20 As System.Windows.Forms.Button
+    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
+    Friend WithEvents Button21 As System.Windows.Forms.Button
+    Friend WithEvents Button22 As System.Windows.Forms.Button
+    Friend WithEvents Button23 As System.Windows.Forms.Button
 
 End Class
