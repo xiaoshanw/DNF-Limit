@@ -37,10 +37,6 @@ Partial Class Main
         Me.GamePath = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
-        Me.Button22 = New System.Windows.Forms.Button()
-        Me.Button21 = New System.Windows.Forms.Button()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.Button20 = New System.Windows.Forms.Button()
         Me.Button19 = New System.Windows.Forms.Button()
         Me.Button18 = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
@@ -214,7 +210,6 @@ Partial Class Main
         Me.GamePath.Name = "GamePath"
         Me.GamePath.Size = New System.Drawing.Size(444, 21)
         Me.GamePath.TabIndex = 4
-        Me.GamePath.Text = "C:\Users\VoCyt\Downloads\instdrv驱动加载工具win7\vLimit-d.sys"
         '
         'Label1
         '
@@ -230,10 +225,6 @@ Partial Class Main
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.GroupBox2.Controls.Add(Me.Button22)
-        Me.GroupBox2.Controls.Add(Me.Button21)
-        Me.GroupBox2.Controls.Add(Me.TextBox1)
-        Me.GroupBox2.Controls.Add(Me.Button20)
         Me.GroupBox2.Controls.Add(Me.Button19)
         Me.GroupBox2.Controls.Add(Me.Button18)
         Me.GroupBox2.Controls.Add(Me.Button11)
@@ -251,40 +242,6 @@ Partial Class Main
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "附加功能(绿色常用、红色危险、黑色普通，鼠标停留显示简介)"
-        '
-        'Button22
-        '
-        Me.Button22.Location = New System.Drawing.Point(445, 107)
-        Me.Button22.Name = "Button22"
-        Me.Button22.Size = New System.Drawing.Size(27, 23)
-        Me.Button22.TabIndex = 14
-        Me.Button22.Text = "Button22"
-        Me.Button22.UseVisualStyleBackColor = True
-        '
-        'Button21
-        '
-        Me.Button21.Location = New System.Drawing.Point(399, 105)
-        Me.Button21.Name = "Button21"
-        Me.Button21.Size = New System.Drawing.Size(27, 23)
-        Me.Button21.TabIndex = 13
-        Me.Button21.Text = "Button21"
-        Me.Button21.UseVisualStyleBackColor = True
-        '
-        'TextBox1
-        '
-        Me.TextBox1.Location = New System.Drawing.Point(478, 106)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(193, 21)
-        Me.TextBox1.TabIndex = 12
-        '
-        'Button20
-        '
-        Me.Button20.Location = New System.Drawing.Point(340, 107)
-        Me.Button20.Name = "Button20"
-        Me.Button20.Size = New System.Drawing.Size(43, 23)
-        Me.Button20.TabIndex = 0
-        Me.Button20.Text = "Button20"
-        Me.Button20.UseVisualStyleBackColor = True
         '
         'Button19
         '
@@ -538,7 +495,6 @@ Partial Class Main
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.GroupBox2.ResumeLayout(False)
-        Me.GroupBox2.PerformLayout()
         Me.ContextMenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
@@ -586,10 +542,6 @@ Partial Class Main
     Friend WithEvents 自动删除rep文件ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Button18 As System.Windows.Forms.Button
     Friend WithEvents Button19 As System.Windows.Forms.Button
-    Friend WithEvents Button20 As System.Windows.Forms.Button
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents Button21 As System.Windows.Forms.Button
-    Friend WithEvents Button22 As System.Windows.Forms.Button
     Friend WithEvents Button23 As System.Windows.Forms.Button
 
 End Class
