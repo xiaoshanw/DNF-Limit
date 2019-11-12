@@ -10,6 +10,9 @@ Win8、Win10版本：基于.net 4.5编译
 5、XP用户建议使用.net2.0版本，下载地址https://www.microsoft.com/en-us/download/details.aspx?id=1639
 
 更新记录：
+2019-11-11 Ver:0.0.4.1
+1.修复驱动拦截不生效的bug
+
 2019-11-11 Ver:0.0.4.0
 1.新增驱动拦截模式，详细功能见更新地址&内部说明
 2.修复部分bug

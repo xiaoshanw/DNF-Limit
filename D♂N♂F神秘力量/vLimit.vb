@@ -234,6 +234,7 @@
     Private Sub SYS_ADD(ByVal vpath As String)
         If Not ListBox1.Items.Contains(vpath) Then
             ListBox1.Items.Add(vpath)
+            IO.Directory.CreateDirectory(sys_ini)
             IO.File.Create(sys_ini + SYS_STRING_ENCODE(vpath)).Close()
         End If
     End Sub
