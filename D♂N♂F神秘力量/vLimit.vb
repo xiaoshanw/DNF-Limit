@@ -269,7 +269,8 @@
                 If strA.Length > 3 Then
                     vline = (Main.GamePath.Text + strA(2)).Replace("\\", "\")
                     If IO.Path.GetExtension(vline).ToLower = ".exe" Then
-                        If ListBox1.Items.Contains(vline) = False Then SYS_ADD(vline.ToLower)
+
+                        If strA(1) <> "0" And ListBox1.Items.Contains(vline) = False Then SYS_ADD(vline.ToLower)
                     End If
                 End If
                     
