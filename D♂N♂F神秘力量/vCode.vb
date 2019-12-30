@@ -283,7 +283,6 @@
         End If
         Shell("cmd.exe /c """ + take_own_exe + " /f " + inString.Replace("\\", "\") + "", AppWinStyle.Hide, True)
     End Sub
-
     Public Function Get_CPU_Meltdown_Spectre() As Boolean
         Dim MyReg As Microsoft.Win32.RegistryKey
         MyReg = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management")
@@ -402,7 +401,6 @@
         Return vRet
 
     End Function
-
     Public Sub Scan_For_Addon(ByVal path As String, ByVal FileNames As ArrayList, ByRef InData As ArrayList)
         Dim sg As My_Data_Type
         For Each vline In IO.Directory.GetFiles(path)
@@ -458,12 +456,34 @@
         
         Return eax
     End Function
-
     Public Sub ShowBalloonTipEx(ByVal myNotifyIcon As Windows.Forms.NotifyIcon, ByVal timeout As Integer, ByVal tipTitle As String, ByVal tipText As String, ByVal tipIcon As Windows.Forms.ToolTipIcon)
         If Main.气泡提示ToolStripMenuItem.Checked Then myNotifyIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon)
     End Sub
-
-
+    Public Function Get_MaintenanceDisabled_Status()
+        Try
+            Dim MyReg As Microsoft.Win32.RegistryKey
+            MyReg = Microsoft.Win32.Registry.LocalMachine.OpenSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance")
+            Dim value = MyReg.GetValue("MaintenanceDisabled")
+            If value = 1 Then Return True Else Return False
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
+    Public Function Set_MaintenanceDisabled_Status(ByVal vBoolean As Boolean) As Boolean
+        Try
+            Dim MyReg As Microsoft.Win32.RegistryKey
+            MyReg = Microsoft.Win32.Registry.LocalMachine.CreateSubKey("SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance")
+            If vBoolean Then
+                MyReg.SetValue("MaintenanceDisabled", 1, Microsoft.Win32.RegistryValueKind.DWord)
+            Else
+                MyReg.DeleteValue("MaintenanceDisabled", False)
+            End If
+            Return True
+        Catch ex As Exception
+            MsgBox(ex.Message)
+            Return False
+        End Try
+    End Function
 End Module
 Class mt
     Public Sub Check_for_Update()

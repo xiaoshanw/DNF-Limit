@@ -37,6 +37,7 @@ Partial Class Main
         Me.GamePath = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
+        Me.Button20 = New System.Windows.Forms.Button()
         Me.Button19 = New System.Windows.Forms.Button()
         Me.Button18 = New System.Windows.Forms.Button()
         Me.Button11 = New System.Windows.Forms.Button()
@@ -225,6 +226,7 @@ Partial Class Main
         Me.GroupBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox2.Controls.Add(Me.Button20)
         Me.GroupBox2.Controls.Add(Me.Button19)
         Me.GroupBox2.Controls.Add(Me.Button18)
         Me.GroupBox2.Controls.Add(Me.Button11)
@@ -242,6 +244,18 @@ Partial Class Main
         Me.GroupBox2.TabIndex = 1
         Me.GroupBox2.TabStop = False
         Me.GroupBox2.Text = "附加功能(绿色常用、红色危险、黑色普通，鼠标停留显示简介)"
+        '
+        'Button20
+        '
+        Me.Button20.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button20.Location = New System.Drawing.Point(340, 20)
+        Me.Button20.Name = "Button20"
+        Me.Button20.Size = New System.Drawing.Size(331, 23)
+        Me.Button20.TabIndex = 12
+        Me.Button20.Text = "禁用/恢复Win10自动维护"
+        Me.ToolTip1.SetToolTip(Me.Button20, "解决Win10系统挂机蓝屏问题")
+        Me.Button20.UseVisualStyleBackColor = True
         '
         'Button19
         '
@@ -270,7 +284,7 @@ Partial Class Main
         'Button11
         '
         Me.Button11.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button11.Location = New System.Drawing.Point(340, 20)
+        Me.Button11.Location = New System.Drawing.Point(340, 78)
         Me.Button11.Name = "Button11"
         Me.Button11.Size = New System.Drawing.Size(331, 23)
         Me.Button11.TabIndex = 9
@@ -295,7 +309,7 @@ Partial Class Main
         'Button16
         '
         Me.Button16.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button16.Location = New System.Drawing.Point(340, 49)
+        Me.Button16.Location = New System.Drawing.Point(340, 107)
         Me.Button16.Name = "Button16"
         Me.Button16.Size = New System.Drawing.Size(331, 23)
         Me.Button16.TabIndex = 7
@@ -320,7 +334,7 @@ Partial Class Main
         'Button12
         '
         Me.Button12.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button12.Location = New System.Drawing.Point(340, 78)
+        Me.Button12.Location = New System.Drawing.Point(340, 49)
         Me.Button12.Name = "Button12"
         Me.Button12.Size = New System.Drawing.Size(331, 23)
         Me.Button12.TabIndex = 5
@@ -543,5 +557,6 @@ Partial Class Main
     Friend WithEvents Button18 As System.Windows.Forms.Button
     Friend WithEvents Button19 As System.Windows.Forms.Button
     Friend WithEvents Button23 As System.Windows.Forms.Button
+    Friend WithEvents Button20 As System.Windows.Forms.Button
 
 End Class

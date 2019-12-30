@@ -10,6 +10,9 @@ Win8、Win10版本：基于.net 4.5编译
 5、XP用户建议使用.net2.0版本，下载地址https://www.microsoft.com/en-us/download/details.aspx?id=1639
 
 更新记录：
+2019-12-30 Ver:0.0.4.3
+1.新增禁止Win10自动维护的功能，防止Win10挂机蓝屏
+
 2019-11-12 Ver:0.0.4.2
 1.修复驱动同步导致启动异常的问题
 

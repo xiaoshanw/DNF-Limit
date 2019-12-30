@@ -193,11 +193,13 @@
             .AppendText("补丁状态:" + vbCrLf)
             If Get_CPU_Meltdown_Spectre() = True Then
                 .AppendText("未配置(默认)")
+                vMSG.Mode = "cpu_patch_disable"
             Else
                 .AppendText("禁用")
+                vMSG.Mode = "cpu_patch_enable"
             End If
         End With
-        vMSG.Mode = "cpu_patch"
+
         vMSG.Show()
     End Sub
 
@@ -685,4 +687,23 @@
         Return False
     End Function
 
+    Private Sub Button20_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button20.Click
+        With vMSG.TextBox1
+            .Clear()
+            .AppendText("功能简介：" + vbCrLf)
+            .AppendText("在一段时间不操作电脑后（挂机），Win10会触发自动维护，潜在诱发蓝屏" + vbCrLf)
+            .AppendText("关闭自动维护，会少许降低系统流畅度，但是可以缓解因为自动维护带来的蓝屏/卡死困扰" + vbCrLf + vbCrLf)
+            .AppendText("禁用自动维护服务的注册表地址[HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Maintenance]，键[MaintenanceDisabled]，值[DWORD:1]" + vbCrLf)
+            .AppendText("-------------------" + vbCrLf)
+            .AppendText("当前状态状态:" + vbCrLf)
+            If Get_MaintenanceDisabled_Status() = False Then
+                .AppendText("未配置(默认启用)")
+                vMSG.Mode = "maintenance_disabled"
+            Else
+                .AppendText("禁用")
+                vMSG.Mode = "maintenance_enabled"
+            End If
+        End With
+        vMSG.Show()
+    End Sub
 End Class

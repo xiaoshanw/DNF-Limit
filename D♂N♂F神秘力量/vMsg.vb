@@ -7,12 +7,10 @@
         Select Case Mode
             Case ""
                 Button1.Text = "OK"
-            Case "cpu_patch"
-                If Get_CPU_Meltdown_Spectre() Then
-                    Button1.Text = "禁用Intel CPU 幽灵与熔断补丁"
-                Else
-                    Button1.Text = "恢复Intel CPU 幽灵与熔断补丁"
-                End If
+            Case "cpu_patch_disable"
+                Button1.Text = "禁用Intel CPU 幽灵与熔断补丁"
+            Case "cpu_patch_enable"
+                Button1.Text = "恢复Intel CPU 幽灵与熔断补丁"
             Case "chkdsk"
                 Button1.Text = "执行chkdsk磁盘检查"
             Case "del_patch"
@@ -29,6 +27,10 @@
                 Button1.Text = "获取权限"
             Case "del_video_rep"
                 Button1.Text = "删除rep录像文件"
+            Case "maintenance_disabled"
+                Button1.Text = "禁用自动维护"
+            Case "maintenance_enabled"
+                Button1.Text = "恢复自动维护"
             Case Else
                 Button1.Text = "OK"
         End Select
@@ -163,6 +165,20 @@
                     .AutoKill_GameLoader.Start()
                     Me.Close()
                 End With
+            Case "禁用自动维护"
+                If MsgBox("当前状态为[未配置](默认启用)，是否禁用自动维护功能", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    If Set_MaintenanceDisabled_Status(True) Then
+                        MsgBox("设置成功，请重启电脑以生效")
+                        Me.Close()
+                    End If
+                End If
+            Case "恢复自动维护"
+                If MsgBox("当前状态为[禁用]，是否恢复自动维护功能", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                    If Set_MaintenanceDisabled_Status(False) Then
+                        MsgBox("设置成功，请重启电脑以生效")
+                        Me.Close()
+                    End If
+                End If
         End Select
     End Sub
     Public Sub Get_Files_Premission(ByVal Path As String)
