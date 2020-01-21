@@ -1,4 +1,9 @@
 ﻿Module vCode
+#If DEBUG Then
+    Public DEBUG_MODE = True
+#Else
+    Public DEBUG_MODE = False
+#End If
     Public vData() As My_Data_Type
     Public CanIFEO As Boolean
     Public Data_Version As Double = 2.4
@@ -32,8 +37,12 @@
                                             "GameDataPlatformClient.dll", _
                                             "res.vfs", _
                                             "DNFTips.dll"}
+
+
     Public Sub Set_Application_Title()
-        Main.Text = "D♂N♂F神秘力量 Ver " + Get_Application_Version() + " "
+        Main.Text = "D♂N♂F神秘力量"
+        If DEBUG_MODE Then Main.Text += "[调试版本]"
+        Main.Text += " Ver " + Get_Application_Version()
         If CanIFEO Then Main.Text += "[IFEO]" Else Main.Text += "[文件读写]"
         Main.Text += "  Powered by VoCyt" '    for 0.0.2.
     End Sub
@@ -379,7 +388,7 @@
                 CanIFEO = False
             End Try
         End Try
-        
+
 
         Dim vline() As String = Split(InString, vbCrLf)
         If vline.Length < 2 Then IO.File.WriteAllText(INI_Path, My.Resources.list, System.Text.Encoding.UTF8) : Return String_to_Data(My.Resources.list)
@@ -433,8 +442,8 @@
                         End If
 
                 End Select
-            
-            InData.Add(sg)
+
+                InData.Add(sg)
             End If
         Next
         For Each vline In IO.Directory.GetDirectories(path)
@@ -453,7 +462,7 @@
         End Try
 
 
-        
+
         Return eax
     End Function
     Public Sub ShowBalloonTipEx(ByVal myNotifyIcon As Windows.Forms.NotifyIcon, ByVal timeout As Integer, ByVal tipTitle As String, ByVal tipText As String, ByVal tipIcon As Windows.Forms.ToolTipIcon)

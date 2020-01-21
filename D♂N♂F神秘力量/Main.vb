@@ -43,7 +43,7 @@
                     Args_Update = False
             End Select
         Next
-        If Args_Update Then
+        If Args_Update And Not DEBUG_MODE Then
             Dim nc As New mt
             Dim nt As New Threading.Thread(AddressOf nc.Check_for_Update)
             nt.Start()
@@ -300,7 +300,7 @@
         vMSG.Show()
     End Sub
 
-    Private Sub Timer1_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_GameLoader.Tick
+    Private Sub AutoKill_GameLoader_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles AutoKill_GameLoader.Tick
 
         Try
             '删除rep
@@ -325,52 +325,68 @@
         Try
             Select Case Auto_Kill_Gameloader_Flag
                 Case 0
-                    For Each vline As Process In vProcess
-                        Select Case vline.ProcessName.ToLower
-                            Case "teniodl", "gameloader" ', "tesservice"
-                                ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到" + vline.ProcessName + "启动", ToolTipIcon.Info)
-                                Auto_Kill_Gameloader_Flag = 1
-                                AutoKill_GameLoader.Interval = 1000
-                                Public_Date = Now
-                            Case "tguard", "tguardsvc"
-                                If vline.MainModule.FileName.ToLower.Contains(TGuardSvc_Path.ToLower) Then
-                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到TGuardSvc服务", ToolTipIcon.Info)
-                                    Disable_TGuardSvc_All(False)
-                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
+                    If 自动删除rep文件ToolStripMenuItem.Checked = True Then
+                        Try
+                            Dim repfiles = IO.Directory.GetFiles(GamePath.Text)
+                            For Each vline In repfiles
+                                If IO.Path.GetFileName(vline).ToLower Like "video_*.rep" Then
+                                    Try
+                                        IO.File.Delete(vline)
+                                    Catch ex2 As Exception
+
+                                    End Try
                                 End If
-                        End Select
-                    Next
-                Case 1
-                    If DateDiff(DateInterval.Second, Public_Date, Now) > 60 * 3 Then
-                        Auto_Kill_Gameloader_Flag = 0
-                        AutoKill_GameLoader.Stop()
-                        AutoKill_Kill.Start()
-                        AutoKill_GameLoader.Interval = 5000
-                        Auto_Kill_Gameloader_Flag = 0
-                        Exit Sub
+                            Next
+                        Catch ex As Exception
+
+                        End Try
                     End If
-                    For Each vline As Process In vProcess
-                        Select Case vline.ProcessName.ToLower
-                            Case "dnf"
-                                ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到" + vline.ProcessName + "启动" + vbCrLf + "等待游戏载入", ToolTipIcon.Info)
-                                Auto_Kill_Gameloader_Flag = 2
-                        End Select
-                    Next
+                        For Each vline As Process In vProcess
+                            Select Case vline.ProcessName.ToLower
+                                Case "teniodl", "gameloader" ', "tesservice"
+                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到" + vline.ProcessName + "启动", ToolTipIcon.Info)
+                                    Auto_Kill_Gameloader_Flag = 1
+                                    AutoKill_GameLoader.Interval = 1000
+                                    Public_Date = Now
+                                Case "tguard", "tguardsvc"
+                                    If vline.MainModule.FileName.ToLower.Contains(TGuardSvc_Path.ToLower) Then
+                                        ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到TGuardSvc服务", ToolTipIcon.Info)
+                                        Disable_TGuardSvc_All(False)
+                                        ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "禁用TGuardSvc服务", ToolTipIcon.Info)
+                                    End If
+                            End Select
+                        Next
+                Case 1
+                        If DateDiff(DateInterval.Second, Public_Date, Now) > 60 * 3 Then
+                            Auto_Kill_Gameloader_Flag = 0
+                            AutoKill_GameLoader.Stop()
+                            AutoKill_Kill.Start()
+                            AutoKill_GameLoader.Interval = 5000
+                            Auto_Kill_Gameloader_Flag = 0
+                            Exit Sub
+                        End If
+                        For Each vline As Process In vProcess
+                            Select Case vline.ProcessName.ToLower
+                                Case "dnf"
+                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", "检测到" + vline.ProcessName + "启动" + vbCrLf + "等待游戏载入", ToolTipIcon.Info)
+                                    Auto_Kill_Gameloader_Flag = 2
+                            End Select
+                        Next
                 Case 2
-                    For Each vline As Process In vProcess
-                        Select Case vline.ProcessName.ToLower
-                            Case "dnf"
-                                'vline.Start()
-                                If vline.MainWindowTitle = "地下城与勇士" And DateDiff("s", vline.StartTime, Now) > 60 Then
-                                    ShowBalloonTipEx(NotifyIcon1, 2000, "提示", vline.ProcessName + "启动成功" + vbCrLf + "将于10秒后结束残余启动器", ToolTipIcon.Info)
-                                    AutoKill_GameLoader.Stop()
-                                    AutoKill_Kill.Start()
-                                    AutoKill_GameLoader.Interval = 5000
-                                    Auto_Kill_Gameloader_Flag = 0
-                                    Process_dnf = vline
-                                End If
-                        End Select
-                    Next
+                        For Each vline As Process In vProcess
+                            Select Case vline.ProcessName.ToLower
+                                Case "dnf"
+                                    'vline.Start()
+                                    If vline.MainWindowTitle = "地下城与勇士" And DateDiff("s", vline.StartTime, Now) > 60 Then
+60:                                     ShowBalloonTipEx(NotifyIcon1, 2000, "提示", vline.ProcessName + "启动成功" + vbCrLf + "将于10秒后结束残余启动器", ToolTipIcon.Info)
+                                        AutoKill_GameLoader.Stop()
+                                        AutoKill_Kill.Start()
+                                        AutoKill_GameLoader.Interval = 5000
+                                        Auto_Kill_Gameloader_Flag = 0
+                                        Process_dnf = vline
+                                    End If
+                            End Select
+                        Next
             End Select
         Catch ex As Exception
             'NotifyIcon1.ShowBalloonTip(2000, "错误", ex.Message, ToolTipIcon.Error)
@@ -705,5 +721,9 @@
             End If
         End With
         vMSG.Show()
+    End Sub
+
+    Private Sub 更新链接ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 更新链接ToolStripMenuItem.Click
+        Diagnostics.Process.Start(Update_Page)
     End Sub
 End Class

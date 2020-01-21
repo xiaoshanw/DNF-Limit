@@ -63,6 +63,7 @@ Partial Class Main
         Me.打开目录ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.重置配置ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.交流赞助ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.更新链接ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.交流群421483534ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.赞助ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
@@ -475,10 +476,16 @@ Partial Class Main
         '
         '交流赞助ToolStripMenuItem
         '
-        Me.交流赞助ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.交流群421483534ToolStripMenuItem, Me.赞助ToolStripMenuItem})
+        Me.交流赞助ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.更新链接ToolStripMenuItem, Me.交流群421483534ToolStripMenuItem, Me.赞助ToolStripMenuItem})
         Me.交流赞助ToolStripMenuItem.Name = "交流赞助ToolStripMenuItem"
-        Me.交流赞助ToolStripMenuItem.Size = New System.Drawing.Size(77, 20)
-        Me.交流赞助ToolStripMenuItem.Text = "交流♂赞助"
+        Me.交流赞助ToolStripMenuItem.Size = New System.Drawing.Size(113, 20)
+        Me.交流赞助ToolStripMenuItem.Text = "更新♂交流♂赞助"
+        '
+        '更新链接ToolStripMenuItem
+        '
+        Me.更新链接ToolStripMenuItem.Name = "更新链接ToolStripMenuItem"
+        Me.更新链接ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.更新链接ToolStripMenuItem.Text = "COLG更新发布贴"
         '
         '交流群421483534ToolStripMenuItem
         '
@@ -558,5 +565,6 @@ Partial Class Main
     Friend WithEvents Button19 As System.Windows.Forms.Button
     Friend WithEvents Button23 As System.Windows.Forms.Button
     Friend WithEvents Button20 As System.Windows.Forms.Button
+    Friend WithEvents 更新链接ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class
