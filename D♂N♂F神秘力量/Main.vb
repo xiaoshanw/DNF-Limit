@@ -41,6 +41,10 @@
                     Args_Background = True
                 Case "-nu", "-noupgrade"
                     Args_Update = False
+                Case Else
+                    If vline.ToLower.StartsWith("-path=") Then
+                        GamePath.Text = Mid(vline, 7)
+                    End If
             End Select
         Next
         If Args_Update And Not DEBUG_MODE Then
@@ -175,10 +179,22 @@
     End Sub
 
     Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
-        vMSG.Mode = ""
-        vMSG.TextBox1.Text = My.Resources.help
-        vMSG.TextBox1.Select(0, 0)
-        vMSG.Show()
+
+        Try
+            Dim tpf = IO.Path.GetTempPath
+            tpf += Application.ProductName + "帮助文档.txt"
+            IO.File.Delete(tpf)
+            IO.File.WriteAllText(tpf, My.Resources.help)
+            Diagnostics.Process.Start(tpf)
+
+        Catch ex As Exception
+            vMSG.Mode = ""
+            vMSG.TextBox1.Text = My.Resources.help
+            vMSG.TextBox1.Select(0, 0)
+            vMSG.Show()
+        End Try
+
+
     End Sub
 
     Private Sub Button7_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button7.Click
@@ -547,7 +563,8 @@
             .Clear()
             .AppendText("该功能将获取游戏目录中所有文件访问权，并设置[正常访问]" + vbCrLf)
             .AppendText("如需屏蔽插件，请待该操作结束后，再次禁用相关插件" + vbCrLf)
-            .AppendText("警告，该操作耗时较长（3~5分钟），请耐心等待" + vbCrLf)
+            .AppendText("操作结束后，将获取游戏目录内所有文件所有者，并删除所有限制权限，并添加Everyone为完全访问" + vbCrLf)
+            .AppendText("因目录权限限制，文件总数统计可能存在不准确性，该操作耗时较长（3~5分钟），请耐心等待" + vbCrLf)
             vMSG.Mode = "getpremission"
             vMSG.arg = (IO.Path.GetTempPath + "\takeown.exe").Replace("\\", "\")
         End With
@@ -725,5 +742,26 @@
 
     Private Sub 更新链接ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 更新链接ToolStripMenuItem.Click
         Diagnostics.Process.Start(Update_Page)
+    End Sub
+
+    Private Sub Button21_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button21.Click
+        'Set_File_Security(GamePath.Text, True, Nothing)
+        'Exit Sub
+        Try
+            Dim tpf = IO.Path.GetTempPath
+            tpf += Application.ProductName + "说明文档.txt"
+            IO.File.Delete(tpf)
+            IO.File.WriteAllText(tpf, My.Resources.说明文档)
+            Diagnostics.Process.Start(tpf)
+
+        Catch ex As Exception
+            vMSG.Mode = ""
+            vMSG.TextBox1.Text = My.Resources.说明文档
+            vMSG.TextBox1.Select(0, 0)
+            vMSG.Show()
+        End Try
+
+
+
     End Sub
 End Class

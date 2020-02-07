@@ -229,6 +229,7 @@
         fop.Filter = "可执行文件|*.exe"
         If fop.ShowDialog = Windows.Forms.DialogResult.OK Then
             SYS_ADD(fop.FileName.ToLower)
+            ReloadDriver()
         End If
     End Sub
     Private Sub SYS_ADD(ByVal vpath As String)
@@ -258,6 +259,7 @@
         Next
         For Each vline As String In vstr
             SYS_DEL(vline)
+            ReloadDriver()
         Next
     End Sub
 
@@ -273,12 +275,13 @@
                         If strA(1) <> "0" And ListBox1.Items.Contains(vline) = False Then SYS_ADD(vline.ToLower)
                     End If
                 End If
-                    
+
             Catch ex As Exception
 
             End Try
 
         Next
+        ReloadDriver()
     End Sub
 
     Private Sub Button9_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button9.Click
@@ -286,5 +289,10 @@
         vMSG.TextBox1.Select(0, 0)
         vMSG.Show()
     End Sub
-
+    Private Sub ReloadDriver()
+        If Label6.Text = "已加载" Then
+            Button4_Click(Me, Nothing)
+            Button3_Click(Me, Nothing)
+        End If
+    End Sub
 End Class

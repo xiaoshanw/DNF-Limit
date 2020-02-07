@@ -108,7 +108,7 @@
         Return ""
     End Function
     Public Sub Kill_Process()
-        Dim s As String = "下列正在运行的程序可能会影响本软件运行，是否关闭？" + vbCrLf + "----------" + vbCrLf
+        Dim s As String = "下列正在运行的程序可能会影响本软件运行，是否关闭？（不关闭亦可运行）" + vbCrLf + vbCrLf + "----------" + vbCrLf
         Dim vDNF_List() As String = {"CrossProxy", "TPHelper", "TQMCenter", "tgp_gamead", "GameLoader", "DNF"}
         Dim vProcess() As Process = Process.GetProcesses
         Dim vMessage As String = s
@@ -211,41 +211,34 @@
     End Sub
     Public Function Set_File_Security(ByVal vfilefullpath As String, ByVal vEnabled As Boolean, ByRef vEx_Catch As Exception) As Boolean
         Try
-            Dim MyObjectSecurity
-            Dim MyObjectInfo
-            'Dim rule_deny
-            'Dim rule_allow
+            Dim vFileInfo
+            Dim vFileACL
             If IO.File.Exists(vfilefullpath) Then
-                MyObjectInfo = New IO.FileInfo(vfilefullpath.Replace("\\", "\"))
-                'rule_deny = New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Deny)
-                'rule_allow = New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Allow)
+                vFileInfo = New IO.FileInfo(vfilefullpath.Replace("\\", "\"))
             ElseIf IO.Directory.Exists(vfilefullpath) Then
-                MyObjectInfo = New IO.DirectoryInfo(vfilefullpath.Replace("\\", "\"))
-                'rule_deny = New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Deny)
-                'rule_allow = New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Allow)
+                vFileInfo = New IO.DirectoryInfo(vfilefullpath.Replace("\\", "\"))
             Else
                 Throw New Exception("File not found.")
             End If
-            'Dim vfilepath As String = vfilefullpath.Replace("\\", "\")
-            'Dim MyFileInfo As IO.FileInfo = New IO.FileInfo(vfilepath)
-            'Dim MyObjectSecurity As Security.AccessControl.FileSecurity
+
             Try
-                MyObjectSecurity = MyObjectInfo.GetAccessControl
+                vFileACL = vFileInfo.GetAccessControl
             Catch ex2 As Exception
                 Take_Owner(vfilefullpath)
-                MyObjectSecurity = MyObjectInfo.GetAccessControl
+                vFileACL = vFileInfo.GetAccessControl
             End Try
-
-            Dim rule_deny As Security.AccessControl.FileSystemAccessRule = New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Deny)
-            Dim rule_allow As Security.AccessControl.FileSystemAccessRule = New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Allow)
+            Dim rules As System.Security.AccessControl.AuthorizationRuleCollection
+            rules = vFileACL.GetAccessRules(True, True, GetType(System.Security.Principal.NTAccount))
+            For Each vline As System.Security.AccessControl.FileSystemAccessRule In rules
+                vFileACL.RemoveAccessRule(vline)
+            Next
+            vFileACL.SetAccessRuleProtection(True, False)
             If vEnabled = False Then
-                MyObjectSecurity.RemoveAccessRule(rule_allow)
-                MyObjectSecurity.AddAccessRule(rule_deny)
+                vFileACL.SetAccessRule(New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Deny))
             Else
-                MyObjectSecurity.RemoveAccessRule(rule_deny)
-                MyObjectSecurity.AddAccessRule(rule_allow)
+                vFileACL.SetAccessRule(New Security.AccessControl.FileSystemAccessRule("Everyone", Security.AccessControl.FileSystemRights.FullControl, Security.AccessControl.AccessControlType.Allow))
             End If
-            MyObjectInfo.SetAccessControl(MyObjectSecurity)
+            vFileInfo.SetAccessControl(vFileACL)
             Return True
         Catch ex As Exception
             vEx_Catch = ex

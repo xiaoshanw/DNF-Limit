@@ -169,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="damotouicon.ico" />
+    <None Include="Resources\说明文档.txt" />
     <None Include="Resources\vLimit-d说明.txt" />
     <None Include="Resources\vLimit-d.sys" />
     <None Include="Resources\wx.png" />

@@ -10,6 +10,10 @@ Win8、Win10版本：基于.net 4.5编译
 5、XP用户建议使用.net2.0版本，下载地址https://www.microsoft.com/en-us/download/details.aspx?id=1639
 
 更新记录：
+2020-01-21 Ver:0.0.4.5
+1.优化vLimit-d驱动
+2.优化获取文件所有权功能
+
 2020-01-21 Ver:0.0.4.4
 1.优化后台模式
 2.新增更新链接

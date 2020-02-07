@@ -139,8 +139,11 @@
   <data name="vLimit_d" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vLimit-d.sys;System.Byte[], mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="vLimit_d说明" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\vLimit-d说明.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="说明文档" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\说明文档.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;gb2312</value>
   </data>
 </root>

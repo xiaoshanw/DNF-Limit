@@ -9,9 +9,8 @@
         If RtlSetProcessIsCritical(1, 0, 0) = 0 Then vMSG.TextBox1.AppendText("[OK]RtlSetProcessIsCritical" & vbCrLf)
 
         'SeShutdown_Privilege = 0x13 = 19
-        If RtlAdjustPrivilege(19, True, False, 0) = 0 Then vMSG.TextBox1.AppendText("[OK]RtlAdjustPrivilege SeShutdown_Privilege" & vbCrLf)
+        If RtlAdjustPrivilege(19, True, False, 0) = 0 Then vMSG.TextBox1.AppendText("[OK]RtlAdjustPrivilege SeShutdownPrivilege" & vbCrLf)
         NtRaiseHardError(&HC000021A, 4, 1, 0, 6, 0)
         Application.Exit()
     End Sub
-
 End Module

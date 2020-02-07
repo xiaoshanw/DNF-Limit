@@ -25,6 +25,7 @@ Partial Class Main
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Main))
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button21 = New System.Windows.Forms.Button()
         Me.Button23 = New System.Windows.Forms.Button()
         Me.Button15 = New System.Windows.Forms.Button()
         Me.Button14 = New System.Windows.Forms.Button()
@@ -77,6 +78,7 @@ Partial Class Main
         '
         Me.GroupBox1.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
                     Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.GroupBox1.Controls.Add(Me.Button21)
         Me.GroupBox1.Controls.Add(Me.Button23)
         Me.GroupBox1.Controls.Add(Me.Button15)
         Me.GroupBox1.Controls.Add(Me.Button14)
@@ -94,6 +96,19 @@ Partial Class Main
         Me.GroupBox1.TabIndex = 0
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "TX全家桶"
+        '
+        'Button21
+        '
+        Me.Button21.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button21.Font = New System.Drawing.Font("宋体", 9.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(134, Byte))
+        Me.Button21.ForeColor = System.Drawing.Color.Green
+        Me.Button21.Location = New System.Drawing.Point(6, 134)
+        Me.Button21.Name = "Button21"
+        Me.Button21.Size = New System.Drawing.Size(328, 23)
+        Me.Button21.TabIndex = 13
+        Me.Button21.Text = "软件说明文档"
+        Me.Button21.UseVisualStyleBackColor = True
         '
         'Button23
         '
@@ -134,11 +149,10 @@ Partial Class Main
         '
         'Button6
         '
-        Me.Button6.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.Button6.Location = New System.Drawing.Point(6, 134)
+        Me.Button6.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Button6.Location = New System.Drawing.Point(340, 134)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(665, 23)
+        Me.Button6.Size = New System.Drawing.Size(331, 23)
         Me.Button6.TabIndex = 9
         Me.Button6.Text = "帮助"
         Me.Button6.UseVisualStyleBackColor = True
@@ -566,5 +580,6 @@ Partial Class Main
     Friend WithEvents Button23 As System.Windows.Forms.Button
     Friend WithEvents Button20 As System.Windows.Forms.Button
     Friend WithEvents 更新链接ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents Button21 As System.Windows.Forms.Button
 
 End Class

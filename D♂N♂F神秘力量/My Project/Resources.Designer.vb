@@ -187,5 +187,14 @@ Namespace My.Resources
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
+        
+        '''<summary>
+        '''  查找类似  的本地化字符串。
+        '''</summary>
+        Friend ReadOnly Property 说明文档() As String
+            Get
+                Return ResourceManager.GetString("说明文档", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace
