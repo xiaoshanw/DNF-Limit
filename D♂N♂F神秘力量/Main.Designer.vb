@@ -64,10 +64,13 @@ Partial Class Main
         Me.打开目录ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.重置配置ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.交流赞助ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.检测更新ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.更新链接ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.交流群421483534ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.赞助ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolTip1 = New System.Windows.Forms.ToolTip(Me.components)
+        Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
+        Me.禁用更新ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -479,21 +482,27 @@ Partial Class Main
         '打开目录ToolStripMenuItem
         '
         Me.打开目录ToolStripMenuItem.Name = "打开目录ToolStripMenuItem"
-        Me.打开目录ToolStripMenuItem.Size = New System.Drawing.Size(118, 22)
+        Me.打开目录ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.打开目录ToolStripMenuItem.Text = "打开目录"
         '
         '重置配置ToolStripMenuItem
         '
         Me.重置配置ToolStripMenuItem.Name = "重置配置ToolStripMenuItem"
-        Me.重置配置ToolStripMenuItem.Size = New System.Drawing.Size(118, 22)
+        Me.重置配置ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
         Me.重置配置ToolStripMenuItem.Text = "重置配置"
         '
         '交流赞助ToolStripMenuItem
         '
-        Me.交流赞助ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.更新链接ToolStripMenuItem, Me.交流群421483534ToolStripMenuItem, Me.赞助ToolStripMenuItem})
+        Me.交流赞助ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.检测更新ToolStripMenuItem, Me.更新链接ToolStripMenuItem, Me.交流群421483534ToolStripMenuItem, Me.赞助ToolStripMenuItem, Me.ToolStripSeparator1, Me.禁用更新ToolStripMenuItem})
         Me.交流赞助ToolStripMenuItem.Name = "交流赞助ToolStripMenuItem"
         Me.交流赞助ToolStripMenuItem.Size = New System.Drawing.Size(113, 20)
         Me.交流赞助ToolStripMenuItem.Text = "更新♂交流♂赞助"
+        '
+        '检测更新ToolStripMenuItem
+        '
+        Me.检测更新ToolStripMenuItem.Name = "检测更新ToolStripMenuItem"
+        Me.检测更新ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.检测更新ToolStripMenuItem.Text = "检测新版本"
         '
         '更新链接ToolStripMenuItem
         '
@@ -512,6 +521,17 @@ Partial Class Main
         Me.赞助ToolStripMenuItem.Name = "赞助ToolStripMenuItem"
         Me.赞助ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
         Me.赞助ToolStripMenuItem.Text = "赞助の二♂维♂码"
+        '
+        'ToolStripSeparator1
+        '
+        Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(277, 6)
+        '
+        '禁用更新ToolStripMenuItem
+        '
+        Me.禁用更新ToolStripMenuItem.Name = "禁用更新ToolStripMenuItem"
+        Me.禁用更新ToolStripMenuItem.Size = New System.Drawing.Size(280, 22)
+        Me.禁用更新ToolStripMenuItem.Text = "禁用更新"
         '
         'Main
         '
@@ -581,5 +601,8 @@ Partial Class Main
     Friend WithEvents Button20 As System.Windows.Forms.Button
     Friend WithEvents 更新链接ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents Button21 As System.Windows.Forms.Button
+    Friend WithEvents 检测更新ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator1 As System.Windows.Forms.ToolStripSeparator
+    Friend WithEvents 禁用更新ToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
 
 End Class

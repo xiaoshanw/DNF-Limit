@@ -25,8 +25,8 @@
         Else
             vData = String_to_Data("")
         End If
-
-        气泡提示ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\NoBalloonTip")
+        禁用更新ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\noUpdate")
+        气泡提示ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\noBalloonTip")
         自动删除rep文件ToolStripMenuItem.Checked = Not IO.File.Exists(Path_Info + "\noDelrepFile")
         开机启动ToolStripMenuItem.Checked = IO.File.Exists(Startup_Path + "\" + Application.ProductName + ".bat")
 
@@ -34,7 +34,7 @@
         Set_Application_Title()
 
         Dim Args_Background = False
-        Dim Args_Update = True
+        Dim Args_Update = Not 禁用更新ToolStripMenuItem.Checked
         For Each vline In My.Application.CommandLineArgs
             Select Case vline.ToLower
                 Case "-b", "-bg", "-background"
@@ -49,6 +49,7 @@
         Next
         If Args_Update And Not DEBUG_MODE Then
             Dim nc As New mt
+            nc.isMessage = True
             Dim nt As New Threading.Thread(AddressOf nc.Check_for_Update)
             nt.Start()
         End If
@@ -565,6 +566,15 @@
             .AppendText("如需屏蔽插件，请待该操作结束后，再次禁用相关插件" + vbCrLf)
             .AppendText("操作结束后，将获取游戏目录内所有文件所有者，并删除所有限制权限，并添加Everyone为完全访问" + vbCrLf)
             .AppendText("因目录权限限制，文件总数统计可能存在不准确性，该操作耗时较长（3~5分钟），请耐心等待" + vbCrLf)
+            .AppendText("--------------------" + vbCrLf)
+            .AppendText("Windows 10系统胡乱启用administrator管理员账号导致权限异常无法禁用文件的解决方法：" + vbCrLf)
+            .AppendText("1.右键游戏目录>属性>安全>高级" + vbCrLf)
+            .AppendText("2.点击禁用继承>从此对象中删除所有已继承的权限" + vbCrLf)
+            .AppendText("3.添加>选择主体>输入everyone>勾选完全控制" + vbCrLf)
+            .AppendText("4.回到高级选项卡>勾选使用可从此对象继承的权限项目替换所有子对象的权限项目>确定" + vbCrLf)
+            .AppendText("5.弹窗提示这将使来自XXX的可继承权限替换此对象所有子对象的明确定义权限, 你想继续吗 > 是" + vbCrLf)
+            .AppendText("6.确定" + vbCrLf)
+
             vMSG.Mode = "getpremission"
             vMSG.arg = (IO.Path.GetTempPath + "\takeown.exe").Replace("\\", "\")
         End With
@@ -741,7 +751,14 @@
     End Sub
 
     Private Sub 更新链接ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 更新链接ToolStripMenuItem.Click
-        Diagnostics.Process.Start(Update_Page)
+        Dim ms = New mt
+        ms.isMessage = False
+        ms.Check_for_Update()
+        If ms.updURL = "" Then
+            MsgBox("获取更新地址失败")
+        Else
+            Diagnostics.Process.Start(ms.updURL)
+        End If
     End Sub
 
     Private Sub Button21_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button21.Click
@@ -763,5 +780,21 @@
 
 
 
+    End Sub
+
+    Private Sub 检测更新ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 检测更新ToolStripMenuItem.Click
+        Dim nc As New mt
+        nc.isMessage = True
+        Dim nt As New Threading.Thread(AddressOf nc.Check_for_Update)
+        nt.Start()
+    End Sub
+
+    Private Sub 禁用更新ToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles 禁用更新ToolStripMenuItem.Click
+        If 禁用更新ToolStripMenuItem.Checked Then
+            IO.File.Create(Path_Info + "\noUpdate").Close()
+        Else
+            IO.File.Delete(Path_Info + "\noUpdate")
+        End If
+        禁用更新ToolStripMenuItem.Checked = Not 禁用更新ToolStripMenuItem.Checked
     End Sub
 End Class

@@ -73,7 +73,7 @@
         SESSIONCHANGE = &H80
     End Enum
 #End Region
-    Dim sys_path = (Path_Info + "\vLimit-d.sys").Replace("\\", "\")
+    Public sys_path = (Path_Info + "\vLimit-d.sys").Replace("\\", "\")
     Dim sys_ini = ("C:\Users\Public\Documents\vLimit-d\")
     Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
         If Not Check_File() Then

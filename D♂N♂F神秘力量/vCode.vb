@@ -7,9 +7,7 @@
     Public vData() As My_Data_Type
     Public CanIFEO As Boolean
     Public Data_Version As Double = 2.4
-    Public Update_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update"
-    Public Update_Page_URL As String = "http://vocyt-dnf-limit.oss-cn-qingdao.aliyuncs.com/application-update-page"
-    Public Update_Page As String = "http://bbs.colg.cn/thread-7613039-1-1.html"
+    Public Update_Server = "update.vocyt.com"
     Public TGuardSvc_Path As String = "C:\Program Files (x86)\Tencent\TGuard\"
     Public Startup_Path As String = Environment.GetFolderPath(Environment.SpecialFolder.Startup)
     'Public VoCytDefenderEx_Path As String
@@ -22,7 +20,6 @@
     Public Path_Info As String = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\" + Application.ProductName
     Public INI_Path = Path_Info + ("\list.ini").Replace("\\", "\")
     Public VCD_Path = (Path_Info + "\VoCytDefenderEx.exe").Replace("\\", "\")
-    'Public TGuard_Tried_Sum As Integer
     Public Addon_List_String() As String = {"TP3Helper.exe", _
                                             "TPHelper.exe", _
                                             "TPWeb.exe", _
@@ -133,6 +130,19 @@
                     Next
                 Next
             End If
+        End If
+        If IO.File.Exists(vLimit.sys_path) Then
+            s = "vLimit-d驱动拦截有更新，请进入驱动拦截页面删除驱动并重新加载拦截"
+            Try
+                Dim ns = IO.File.ReadAllBytes(vLimit.sys_path)
+                Dim ls = My.Resources.vLimit_d
+                If ns.Length <> ls.Length Then MsgBox(s)
+                For i = 0 To ns.Length
+                    If ns(i) <> ls(i) Then MsgBox(s) : Exit For
+                Next
+            Catch ex As Exception
+
+            End Try
         End If
     End Sub
     Friend Function Get_Application_Version() As String
@@ -486,46 +496,54 @@
             Return False
         End Try
     End Function
+
 End Module
-Class mt
+Public Class mt
+    Public isMessage As Boolean = False
+    Public updURL As String
     Public Sub Check_for_Update()
         Dim nowversion As Integer = vCode.Get_Application_Version().Replace(".", "")
-        Dim tpf As String = IO.Path.GetTempFileName
         Dim str As String
         Dim strex() As String = {}
         Dim latestversion As Integer = 0
         Try
-            My.Computer.Network.DownloadFile(Update_URL, tpf, "", "", False, 5000, True)
-            str = IO.File.ReadAllText(tpf)
-            strex = Split(str, vbCrLf)
-            If strex.Length > 0 Then
-                If IsNumeric(strex(0).Replace(".", "")) Then latestversion = CInt(strex(0).Replace(".", ""))
+            'My.Computer.Network.DownloadFile(Update_URL, tpf, "", "", False, 5000, True)
+            Dim myEndPoint = New System.Net.IPEndPoint(System.Net.Dns.GetHostAddresses(Update_Server)(0), 47655)
+            Dim mySocket = New System.Net.Sockets.Socket(System.Net.Sockets.AddressFamily.InterNetwork, System.Net.Sockets.SocketType.Stream, System.Net.Sockets.ProtocolType.Tcp)
+            mySocket.Connect(myEndPoint)
+            mySocket.Send(System.Text.Encoding.Unicode.GetBytes("UPDATE"))
+            mySocket.ReceiveTimeout = 5000
+            Dim bytes(121) As Byte
+            Dim index As Integer = 0
+            index = mySocket.Receive(bytes, index, bytes.Length - index, Net.Sockets.SocketFlags.None)
+            While index < bytes.Length
+                index += mySocket.Receive(bytes, index, bytes.Length - index, Net.Sockets.SocketFlags.None)
+            End While
+            For i = 0 To 19
+                bytes(i) = bytes(i + 102)
+            Next
+            ReDim Preserve bytes(19)
+            ReDim bytes(CInt(System.Text.Encoding.Unicode.GetString(bytes)) - 1)
+            index = 0
+            While index < bytes.Length
+                index += mySocket.Receive(bytes, index, bytes.Length - index, Net.Sockets.SocketFlags.None)
+            End While
+            str = System.Text.Encoding.Unicode.GetString(bytes)
+            strex = str.Split(",")
+            If strex.Length = 2 Then
+                latestversion = CInt(strex(0).Replace(".", ""))
+                updURL = strex(1)
+                If latestversion > nowversion And isMessage And updURL <> "" Then
+                    If MsgBox("已有新版本更新，是否跳转至程序发布/更新网页？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
+                        Diagnostics.Process.Start(updURL)
+                    End If
+
+                End If
             End If
-            IO.File.Delete(tpf)
+
+
         Catch ex As Exception
 
         End Try
-        If latestversion > nowversion Then
-            'If True Then
-            If MsgBox("已有新版本更新，是否跳转至程序发布/更新网页？", MsgBoxStyle.YesNo) = MsgBoxResult.Yes Then
-                Try
-                    If strex.Length > 1 Then
-                        If strex(1) = "1" Then
-                            tpf = IO.Path.GetTempFileName
-                            My.Computer.Network.DownloadFile(Update_Page_URL, tpf, "", "", False, 500, True)
-                            Update_Page = IO.File.ReadAllText(tpf)
-                            IO.File.Delete(tpf)
-                        End If
-                    End If
-                Catch ex As Exception
-
-                End Try
-                Diagnostics.Process.Start(Update_Page)
-            End If
-        End If
-
-
-
-
     End Sub
 End Class
